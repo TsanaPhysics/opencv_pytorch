@@ -1,0 +1,169 @@
+\documentclass[11pt,twoside,openright]{book}
+
+\usepackage{styles/rbruacademic}
+
+\begin{document}
+
+% -------------------------------------------------------------
+% หน้าปก 3D Pixar Semi-realistics & XeLaTeX TikZ Transparent Architecture
+% -------------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\begingroup
+\setlength{\XeTeXlinebreakskip}{0pt}
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. Full-Bleed 3D Pixar Cover Artwork (6x9 inch)
+    \node[anchor=center, inner sep=0pt] at (current page.center) {
+        \includegraphics[width=\paperwidth,height=\paperheight]{figures/cover_art.jpg}
+    };
+
+    % 2. UPPER SKY ZONE: Dual-Layer Micro Drop-Shadow Typography
+    % Category Badge
+    \node[anchor=north, align=center] at ([yshift=-0.40in]current page.north) {
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{white} SMART AGRICULTURE \& COMPUTER VISION SERIES}\\[2pt]
+        {\fontsize{8}{10}\selectfont\color{yellow!90!white} เอกสารคำสอนและคู่มือปฏิบัติการขั้นสูง \textbullet\ มหาวิทยาลัยราชภัฏรำไพพรรณี}
+    };
+
+    % Main Title Line 1 (Shadow layer)
+    \node[anchor=north, align=center, text width=5.2in] at ([xshift=0.6pt, yshift=-0.75in]current page.north) {
+        {\fontsize{18}{22}\selectfont\bfseries\color{white} ปัญญาประดิษฐ์และคอมพิวเตอร์วิทัศน์}\\
+        {\fontsize{22}{27}\selectfont\bfseries\color{white} ตรวจจับโรคใบทุเรียนเพื่อเกษตรดิจิทัล}
+    };
+    % Main Title Line 1 (Foreground layer)
+    \node[anchor=north, align=center, text width=5.2in] at ([yshift=-0.76in]current page.north) {
+        {\fontsize{18}{22}\selectfont\bfseries\color{rbruNavy!90!black} ปัญญาประดิษฐ์และคอมพิวเตอร์วิทัศน์}\\
+        {\fontsize{22}{27}\selectfont\bfseries\color{agriGreen!90!black} ตรวจจับโรคใบทุเรียนเพื่อเกษตรดิจิทัล}
+    };
+
+    % English Subtitle
+    \node[anchor=north, align=center] at ([yshift=-1.45in]current page.north) {
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{rbruNavy!85} DEEP LEARNING \& COMPUTER VISION FOR DURIAN LEAF DISEASE DETECTION}
+    };
+
+    % 3. BOTTOM SOIL ZONE: Natural Dark Canvas for Author Metadata
+    % Shadow layer
+    \node[anchor=south, align=center, text width=5.2in] at ([xshift=0.6pt, yshift=0.30in]current page.south) {
+        {\fontsize{13}{16}\selectfont\bfseries\color{black} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}
+    };
+    % Foreground layer
+    \node[anchor=south, align=center, text width=5.2in] at ([yshift=0.31in]current page.south) {
+        {\fontsize{13}{16}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[3pt]
+        {\fontsize{8.5}{11}\selectfont\color{white!95} ศูนย์วิจัยฟิสิกส์ดิจิทัลและปัญญาประดิษฐ์ทางการเกษตร คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
+        {\fontsize{8}{10}\selectfont\color{yellow!90!white} มหาวิทยาลัยราชภัฏรำไพพรรณี \textbullet\ พ.ศ. 2569}
+    };
+\end{tikzpicture}
+\endgroup
+\end{titlepage}
+
+\cleardoublepage
+
+% -------------------------------------------------------------
+% หน้าปกในเวกเตอร์ Dark Mode (Vector Inner Title Page)
+% -------------------------------------------------------------
+\thispagestyle{empty}
+\pagecolor{black!94}
+\begingroup
+\setlength{\XeTeXlinebreakskip}{0pt}
+\begin{tikzpicture}[remember picture, overlay]
+    % วาดองค์ประกอบเวกเตอร์ TikZ ดิจิทัลฟาร์ม
+    \draw[color=rbruGold!40, thick] ([yshift=-1.2in]current page.north) circle (0.65in);
+    
+    \node[anchor=center, align=center] at ([yshift=0.8in]current page.center) {
+        {\fontsize{18}{22}\selectfont\bfseries\color{white} ระบบปัญญาประดิษฐ์วิเคราะห์โรคใบทุเรียน}\\[6pt]
+        {\fontsize{12}{15}\selectfont\color{rbruGold} DURIAN LEAF DISEASE COMPUTER VISION SYSTEM}\\[14pt]
+        {\color{rbruGold!70}\rule{0.6\textwidth}{1pt}}
+    };
+
+    \node[anchor=center, align=center] at ([yshift=-1.0in]current page.center) {
+        {\fontsize{11}{14}\selectfont\color{white!90} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[4pt]
+        {\fontsize{9}{12}\selectfont\color{white!70} สาขาวิชาฟิสิกส์และปัญญาประดิษฐ์ คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
+        {\fontsize{8.5}{11}\selectfont\color{rbruGold!90} มหาวิทยาลัยราชภัฏรำไพพรรณี}
+    };
+\end{tikzpicture}
+\endgroup
+\newpage
+\pagecolor{white}
+\cleardoublepage
+
+% -------------------------------------------------------------
+% Frontmatter: คำนำ, สารบัญ
+% -------------------------------------------------------------
+\frontmatter
+\chapter*{คำนำ}
+\addcontentsline{toc}{chapter}{คำนำ}
+
+เอกสารคำสอนและคู่มือวิชาการฉบับนี้ จัดทำขึ้นเพื่อรวบรวมองค์ความรู้ด้านการบูรณาการเทคโนโลยีคอมพิวเตอร์วิทัศน์ (\textbf{Computer Vision}) และการเรียนรู้เชิงลึก (\textbf{Deep Learning}) เข้ากับงานพยาธิวิทยาพืช (\textbf{Plant Pathology}) โดยมุ่งเน้นการแก้ปัญหาโรคใบทุเรียนซึ่งเป็นพืชเศรษฐกิจหลักของภาคตะวันออกและประเทศไทย
+
+เนื้อหาในเล่มนี้ครอบคลุมตั้งแต่การคัดเลือกสถาปัตยกรรมโมเดลที่มีประสิทธิภาพสูงแต่น้ำหนักเบาอย่าง MobileNetV3, การสร้างไปป์ไลน์การจำแนกภาพแบบ End-to-End บน Google Colab และ PyTorch, การเพิ่มความโปร่งใสตรวจสอบได้ของปัญญาประดิษฐ์ด้วยเทคนิค Grad-CAM, ตลอดจนการแปลงโมเดลให้อยู่ในมาตรฐาน ONNX เพื่อนำไปติดตั้งบนอุปกรณ์ขอบ (Edge AI) และสมาร์ทโฟนของเกษตรกร
+
+ผู้เขียนหวังเป็นอย่างยิ่งว่า เอกสารฉบับนี้จะเป็นประโยชน์ต่อนักศึกษา นักวิจัย เกษตรกร และผู้สนใจในการพัฒนานวัตกรรมเกษตรอัจฉริยะอย่างยั่งยืน
+
+\vspace{1.5cm}
+\begin{flushright}
+\textbf{ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\
+มหาวิทยาลัยราชภัฏรำไพพรรณี
+\end{flushright}
+
+\clearpage
+\tableofcontents
+\clearpage
+\listoftables
+\clearpage
+\listoffigures
+\clearpage
+
+% -------------------------------------------------------------
+% Mainmatter: บทเนื้อหา
+% -------------------------------------------------------------
+\mainmatter
+\include{chapters/ch01_durian_ai}
+
+% -------------------------------------------------------------
+% Backmatter: ประวัติผู้เขียน
+% -------------------------------------------------------------
+\backmatter
+\chapter*{ประวัติผู้เขียน}
+\addcontentsline{toc}{chapter}{ประวัติผู้เขียน}
+
+\noindent
+\begin{minipage}[t]{0.28\textwidth}
+    \centering
+    \begin{tikzpicture}
+        \draw[rbruNavy, fill=rbruNavy!10, line width=2pt] (0,0) circle (1.4cm);
+        \node[font=\fontsize{10}{12}\selectfont\bfseries\color{rbruNavy}] at (0,0) {ภาพถ่ายผู้เขียน};
+    \end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.69\textwidth}
+    {\fontsize{14}{18}\selectfont\bfseries\color{rbruNavy} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[3pt]
+    {\fontsize{10}{13}\selectfont\color{agriGreen}\textbf{ตำแหน่งทางวิชาการ: ผู้ช่วยศาสตราจารย์ สาขาวิชาฟิสิกส์}}\\[2pt]
+    {\fontsize{9.5}{12}\selectfont คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี}\\[2pt]
+    {\fontsize{9}{11}\selectfont อีเมล: chewathassana@rbru.ac.th}
+\end{minipage}
+
+\vspace{8pt}
+{\color{rbruBorder}\hrule height 0.8pt}
+\vspace{10pt}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    {\fontsize{11}{14}\selectfont\bfseries\color{rbruNavy} ประวัติการศึกษา}\\[4pt]
+    {\fontsize{9.5}{13}\selectfont
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item \textbf{ปร.ด. (ฟิสิกส์ประยุกต์)} สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
+        \item \textbf{วท.ม. (ฟิสิกส์ประยุกต์)} สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
+        \item \textbf{วท.บ. ฟิสิกส์ (คอมพิวเตอร์และอิเล็กทรอนิกส์)} มหาวิทยาลัยนเรศวร
+    \end{itemize}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    {\fontsize{11}{14}\selectfont\bfseries\color{rbruNavy} ความเชี่ยวชาญและงานวิจัย}\\[4pt]
+    {\fontsize{9.5}{13}\selectfont
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item ฟิสิกส์เกษตรดิจิทัลและไอโอที (AIoT SmartFarm)
+        \item ปัญญาประดิษฐ์และการเรียนรู้เชิงลึก (Computer Vision)
+        \item การคำนวณโครงสร้างสารแม่เหล็กและควอนตัมฟิสิกส์
+    \end{itemize}}
+\end{minipage}
+
+\end{document}

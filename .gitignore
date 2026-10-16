@@ -23,3 +23,12 @@ ENV/
 Thumbs.db
 .idea/
 .vscode/
+docs/*.aux
+docs/*.log
+docs/*.toc
+docs/*.lof
+docs/*.lot
+docs/*.out
+docs/*.idx
+docs/*.ind
+docs/*.ilg

@@ -1,6 +1,6 @@
-\ProvidesPackage{styles/rbruacademic}[2026/10/16 v2.0 RBRU Academic Textbook Style]
+\ProvidesPackage{styles/rbruacademic}[2026/10/16 v3.0 Thai Academic LaTeX Book Formatting - RBRU Masterclass]
 
-% 1. Page Geometry (Standard Royal 6x9 inch, Left Margin 1.5 in)
+% 1. Page Geometry (Standard Royal 6x9 inch, Left Margin 1.5 in for Binding)
 \RequirePackage{geometry}
 \geometry{
     paperwidth=6in,
@@ -15,23 +15,39 @@
 }
 \RequirePackage{enumitem}
 \RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{makeidx}
+\RequirePackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=deepIndigo,
+    citecolor=agriGreen,
+    urlcolor=techAqua,
+    bookmarksnumbered=true
+}
 
-% 2. Thai Fonts & Typography
+% 2. Thai Fonts & Typography (Sarabun System Font, 1.18 line spacing)
 \RequirePackage{fontspec}
-\RequirePackage{xunicode}
-\RequirePackage{xltxtra}
 \defaultfontfeatures{Mapping=tex-text}
 
-\setmainfont{TH Sarabun New}
+\setmainfont{Sarabun}[
+    BoldFont={Sarabun},
+    BoldFeatures={Weight=Bold},
+    ItalicFont={Sarabun},
+    ItalicFeatures={Shape=Italic},
+    BoldItalicFont={Sarabun},
+    BoldItalicFeatures={Weight=Bold,Shape=Italic}
+]
 
+\linespread{1.18}
 \XeTeXlinebreaklocale "th_TH"
 \XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
 \setlength{\emergencystretch}{2.5em}
 
-% 3. Paragraph Indentation (1 Tab = 1.25 cm)
+% 3. Paragraph Indentation (Strictly 3em indent, no extra parskip as per profile)
 \RequirePackage{indentfirst}
-\setlength{\parindent}{1.25cm}
-\setlength{\parskip}{4pt plus 1pt minus 1pt}
+\setlength{\parindent}{3em}
+\setlength{\parskip}{0pt}
 
 % 4. Color Palette (Modern Futuristic & AgriTech Tone)
 \RequirePackage{xcolor}
@@ -51,6 +67,9 @@
 \definecolor{techViolet}{HTML}{7B2CBF}
 \definecolor{softCyanBg}{HTML}{E0F7FA}
 \definecolor{softYellowBg}{HTML}{FFFDE7}
+\definecolor{codeComment}{HTML}{6A737D}
+\definecolor{codeKeyword}{HTML}{D73A49}
+\definecolor{codeString}{HTML}{032F62}
 
 % 5. Graphics, TikZ & Tables
 \RequirePackage{graphicx}
@@ -63,10 +82,26 @@
 \RequirePackage{needspace}
 \RequirePackage[section]{placeins}
 
-\DeclareCaptionLabelSeparator{thaisep}{\quad}
-\captionsetup{labelsep=thaisep}
-\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=deepIndigo}, textfont={normalfont}, labelsep=thaisep, justification=raggedleft, singlelinecheck=false}
-\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=deepIndigo}, textfont={normalfont}, labelsep=thaisep}
+% Captions formatting: Thai labels, separated by space (no colon!), table left-aligned
+\DeclareCaptionLabelSeparator{thaispace}{\ }
+\captionsetup{labelsep=thaispace}
+\captionsetup[table]{
+    position=top,
+    skip=6pt,
+    labelfont={bf,color=deepIndigo},
+    textfont={normalfont},
+    labelsep=thaispace,
+    justification=raggedright,
+    singlelinecheck=false
+}
+\captionsetup[figure]{
+    position=bottom,
+    skip=8pt,
+    labelfont={bf,color=deepIndigo},
+    textfont={normalfont},
+    labelsep=thaispace,
+    justification=centering
+}
 
 \renewcommand{\figurename}{\mbox{ภาพที่}}
 \renewcommand{\tablename}{\mbox{ตารางที่}}
@@ -80,25 +115,26 @@
 
 % 6. TColorBox Environments
 \RequirePackage[many]{tcolorbox}
+\tcbuselibrary{listings}
 
 \newtcolorbox{planbox}[2][]{
     enhanced,
     breakable,
     colback=white,
     colframe=deepIndigo,
-    fonttitle=\bfseries\fontsize{12}{15}\selectfont\color{white},
+    fonttitle=\bfseries\fontsize{11}{14}\selectfont\color{white},
     coltitle=white,
     colbacktitle=deepIndigo,
     title={#2},
-    arc=2mm,
+    arc=1.5mm,
     boxrule=0.8pt,
-    leftrule=4mm,
+    leftrule=3.5mm,
     top=5pt, bottom=5pt, left=8pt, right=8pt,
     titlerule=0pt,
-    toptitle=3.5pt, bottomtitle=3.5pt,
+    toptitle=3pt, bottomtitle=3pt,
     drop shadow=black!10,
-    before skip=7pt,
-    after skip=7pt,
+    before skip=6pt,
+    after skip=6pt,
     #1
 }
 
@@ -107,16 +143,16 @@
     breakable,
     colback=agriLightGreen!50!white,
     colframe=agriGreen,
-    fonttitle=\bfseries\fontsize{12}{15}\selectfont\color{white},
+    fonttitle=\bfseries\fontsize{11}{14}\selectfont\color{white},
     coltitle=white,
     colbacktitle=agriGreen,
     title={#2},
-    arc=2mm,
+    arc=1.5mm,
     boxrule=0.8pt,
-    leftrule=4mm,
+    leftrule=3.5mm,
     top=5pt, bottom=5pt, left=8pt, right=8pt,
-    before skip=7pt,
-    after skip=7pt,
+    before skip=6pt,
+    after skip=6pt,
     #1
 }
 
@@ -125,26 +161,87 @@
     breakable,
     colback=softCyanBg!35!white,
     colframe=techAqua!85!black,
-    fonttitle=\bfseries\fontsize{12}{15}\selectfont\color{white},
+    fonttitle=\bfseries\fontsize{11}{14}\selectfont\color{white},
     coltitle=white,
     colbacktitle=techAqua!85!black,
     title={#2},
-    arc=2mm,
+    arc=1.5mm,
     boxrule=0.8pt,
-    leftrule=4mm,
+    leftrule=3.5mm,
     top=5pt, bottom=5pt, left=8pt, right=8pt,
     drop shadow=techAqua!15,
-    before skip=7pt,
-    after skip=7pt,
+    before skip=6pt,
+    after skip=6pt,
     #1
 }
 
-% 7. Penalties
+\newtcolorbox{examplebox}[2][]{
+    enhanced,
+    breakable,
+    colback=softYellowBg!45!white,
+    colframe=techAmber!90!black,
+    fonttitle=\bfseries\fontsize{11}{14}\selectfont\color{deepIndigo},
+    coltitle=deepIndigo,
+    colbacktitle=techAmber!35!white,
+    title={#2},
+    arc=1.5mm,
+    boxrule=0.8pt,
+    leftrule=3.5mm,
+    top=5pt, bottom=5pt, left=8pt, right=8pt,
+    before skip=6pt,
+    after skip=6pt,
+    #1
+}
+
+\newtcolorbox{casestudybox}[2][]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=rbruSlate,
+    fonttitle=\bfseries\fontsize{11}{14}\selectfont\color{white},
+    coltitle=white,
+    colbacktitle=rbruSlate,
+    title={#2},
+    arc=1.5mm,
+    boxrule=0.8pt,
+    leftrule=3.5mm,
+    top=5pt, bottom=5pt, left=8pt, right=8pt,
+    drop shadow=black!8,
+    before skip=6pt,
+    after skip=6pt,
+    #1
+}
+
+% 7. Code Listings Environment
+\RequirePackage{listings}
+\lstset{
+    backgroundcolor=\color{rbruCodeBg},
+    basicstyle=\fontsize{8.5}{11}\selectfont\ttfamily,
+    keywordstyle=\bfseries\color{codeKeyword},
+    commentstyle=\itshape\color{codeComment},
+    stringstyle=\color{codeString},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=7pt,
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{rbruBorder},
+    breaklines=true,
+    breakatwhitespace=true,
+    captionpos=t,
+    xleftmargin=1.5em,
+    framexleftmargin=1.5em
+}
+
+% 8. Penalties to prevent widow/orphan lines
 \clubpenalty=10000
 \widowpenalty=10000
 \displaywidowpenalty=10000
 
-% 8. Chapter and Section Formatting (Futuristic Modern Styling)
+% 9. Chapter and Section Formatting (Prominent Right-Aligned Banner)
 \RequirePackage{titlesec}
 
 \newcommand{\rbruchapterbanner}[1]{
@@ -159,11 +256,11 @@
         borderline west={4pt}{0pt}{cyberCyan}
     ]
         \raggedleft
-        {\fontsize{34}{40}\selectfont\bfseries\color{cyberCyan} \chaptertitlename\ \thechapter\par}
+        {\fontsize{32}{38}\selectfont\bfseries\color{cyberCyan} \chaptertitlename\ \thechapter\par}
         \vspace{4pt}
         {\color{techAmber}\rule{0.60\textwidth}{2.2pt}\par}
         \vspace{6pt}
-        {\fontsize{21}{27}\selectfont\bfseries\color{white} #1\par}
+        {\fontsize{20}{26}\selectfont\bfseries\color{white} #1\par}
     \end{tcolorbox}
 }
 
@@ -179,33 +276,33 @@
         borderline west={4pt}{0pt}{cyberCyan}
     ]
         \raggedleft
-        {\fontsize{24}{30}\selectfont\bfseries\color{white} #1\par}
+        {\fontsize{22}{28}\selectfont\bfseries\color{white} #1\par}
     \end{tcolorbox}
 }
 
 \titleformat{\chapter}[block]{\normalfont}{}{0pt}{\rbruchapterbanner}
 \titleformat{name=\chapter,numberless}[block]{\normalfont}{}{0pt}{\rbruunnumberedchapterbanner}
-\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titlespacing*{\chapter}{0pt}{0pt}{16pt}
 
 \titleformat{\section}
-  {\normalfont\fontsize{15.5}{19.5}\bfseries\color{deepIndigo}}
-  {\makebox[1.25cm][l]{\color{techAqua}\rule[-1pt]{3.5pt}{13pt}\hspace{4pt}\thesection}}{0pt}{}
+  {\normalfont\fontsize{14.5}{18.5}\bfseries\color{deepIndigo}}
+  {\makebox[1.25cm][l]{\color{techAqua}\rule[-1pt]{3.5pt}{12pt}\hspace{4pt}\thesection}}{0pt}{}
 \titlespacing*{\section}{0pt}{14pt plus 2pt minus 2pt}{6pt plus 1pt minus 1pt}
 
 \titleformat{\subsection}
-  {\normalfont\fontsize{13.5}{17.5}\bfseries\color{agriGreen!90!black}}
+  {\normalfont\fontsize{12.5}{16.5}\bfseries\color{agriGreen!90!black}}
   {\makebox[1.25cm][l]{\color{neonEmerald}\textbullet\hspace{4pt}\thesubsection}}{0pt}{}
-\titlespacing*{\subsection}{1.25cm}{10pt plus 2pt minus 2pt}{4pt plus 1pt minus 1pt}
+\titlespacing*{\subsection}{0pt}{10pt plus 2pt minus 2pt}{4pt plus 1pt minus 1pt}
 
 % Headers and Footers
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE]{\fontsize{9.5}{12}\selectfont\color{deepIndigo!85}\thepage\quad\textbullet\quad การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟนวิเคราะห์โรคในทุเรียน}
-\fancyhead[RO]{\fontsize{9.5}{12}\selectfont\color{deepIndigo!85}\leftmark\quad\textbullet\quad\thepage}
+\fancyhead[LE]{\fontsize{9}{11.5}\selectfont\color{deepIndigo!85}\thepage\quad\textbullet\quad การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟนวิเคราะห์โรคในทุเรียน}
+\fancyhead[RO]{\fontsize{9}{11.5}\selectfont\color{deepIndigo!85}\leftmark\quad\textbullet\quad\thepage}
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0pt}
-\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\fontsize{9.5}{12}\selectfont\thepage}}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\fontsize{9}{11.5}\selectfont\thepage}}
 
 \renewcommand{\chaptermark}[1]{%
     \markboth{%
@@ -217,3 +314,6 @@
         #1%
     }{}%
 }
+
+% Index configuration
+\makeindex

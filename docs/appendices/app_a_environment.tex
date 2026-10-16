@@ -1,0 +1,74 @@
+\chapter{คู่มือการติดตั้งและตั้งค่าสภาพแวดล้อมการทำงาน}
+\label{app:environment_setup}
+\index{การติดตั้งสภาพแวดล้อม}
+\index{Google Colab}
+
+ภาคผนวกนี้รวบรวมขั้นตอนการติดตั้งและกำหนดค่าสภาพแวดล้อมการทำงาน (Development Environment Setup) สำหรับการพัฒนาและทดสอบระบบปัญญาประดิษฐ์วินิจฉัยโรคใบทุเรียน ทั้งบนระบบคลาวด์ Google Colab และบนเครื่องคอมพิวเตอร์ส่วนบุคคล
+
+\section{การเตรียมสภาพแวดล้อมบน Google Colab (Cloud GPU)}
+Google Colab เป็นสภาพแวดล้อมที่เหมาะสมที่สุดสำหรับผู้เริ่มต้นที่ไม่มีการ์ดจอ GPU โดยมีขั้นตอนการตั้งค่าดังนี้:
+
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item \textbf{การสร้างสมุดงานและเลือกการ์ดจอ GPU:}
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item เข้าสู่เว็บไซต์ \texttt{https://colab.research.google.com} และลงชื่อเข้าใช้ด้วยบัญชี Google
+        \item ไปที่เมนู \textit{Runtime $\rightarrow$ Change runtime type}
+        \item ในช่อง \textit{Hardware accelerator} เลือก \textbf{T4 GPU} และกดปุ่ม \textit{Save}
+    \end{itemize}
+    
+    \item \textbf{การติดตั้งและอัปเดตแพ็กเกจที่จำเป็น:}
+    พิมพ์คำสั่งต่อไปนี้ในเซลล์แรกของสมุดงาน:
+\begin{lstlisting}[language=bash]
+!pip install --upgrade torch torchvision torchaudio
+!pip install onnx onnxruntime opencv-python matplotlib pillow torchinfo
+\end{lstlisting}
+
+    \item \textbf{การตรวจสอบสถานะการเชื่อมต่อ GPU:}
+\begin{lstlisting}[language=Python]
+import torch
+print(f"[*] PyTorch Version: {torch.__version__}")
+print(f"[*] CUDA Available: {torch.cuda.is_available()}")
+if torch.cuda.is_available():
+    print(f"[*] GPU Device Name: {torch.cuda.get_device_name(0)}")
+\end{lstlisting}
+\end{enumerate}
+
+\section{การติดตั้งสภาพแวดล้อมบนเครื่องคอมพิวเตอร์ส่วนบุคคล (Local Machine)}
+สำหรับผู้พัฒนาที่ต้องการรันระบบบนเครื่องคอมพิวเตอร์ส่วนบุคคล (รองรับทั้ง Windows, macOS และ Linux):
+
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+    \item \textbf{การสร้างสภาพแวดล้อมเสมือน (Python Virtual Environment):}
+\begin{lstlisting}[language=bash]
+# สร้างโฟลเดอร์โครงการและสภาพแวดล้อมเสมือน
+python3 -m venv venv_durian
+
+# การเปิดใช้งานสภาพแวดล้อม (macOS/Linux)
+source venv_durian/bin/activate
+
+# การเปิดใช้งานสภาพแวดล้อม (Windows PowerShell)
+.\venv_durian\Scripts\Activate.ps1
+\end{lstlisting}
+
+    \item \textbf{การติดตั้งไลบรารีจากไฟล์ requirements.txt:}
+\begin{lstlisting}[language=bash]
+pip install -r requirements.txt
+\end{lstlisting}
+\end{enumerate}
+
+\section{การติดตั้งชุดพัฒนา Flutter สำหรับการสร้างแอปพลิเคชันมือถือ}
+\index{Flutter SDK}
+การสร้างแอปพลิเคชันสมาร์ทโฟนสำหรับติดตั้งบนระบบปฏิบัติการ Android และ iOS มีขั้นตอนดังนี้:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item ดาวน์โหลด Flutter SDK เวอร์ชันล่าสุดจากเว็บไซต์ทางการ \texttt{https://flutter.dev}
+    \item แตกไฟล์และเพิ่มพาธของโฟลเดอร์ \texttt{flutter/bin} เข้าสู่ System Environment Variables (PATH)
+    \item เปิดเทอร์มินัลและรันคำสั่งตรวจสอบความพร้อม: \texttt{flutter doctor}
+    \item ติดตั้งปลั๊กอินสำหรับ ONNX Runtime ในไฟล์ \texttt{pubspec.yaml}:
+\begin{lstlisting}[language=bash]
+dependencies:
+  flutter:
+    sdk: flutter
+  camera: ^0.10.5
+  onnxruntime: ^1.2.0
+  path_provider: ^2.1.2
+\end{lstlisting}
+\end{enumerate}

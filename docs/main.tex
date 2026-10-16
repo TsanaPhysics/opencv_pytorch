@@ -17,43 +17,67 @@
         \includegraphics[width=\paperwidth,height=\paperheight]{figures/cover_art.jpg}
     };
 
-    % 2. UPPER SKY ZONE: Futuristic Glassmorphic Multi-Layer Typography
-    \node[anchor=north, fill=white, fill opacity=0.90, text opacity=1.0, rounded corners=3mm, inner sep=10pt, drop shadow={opacity=0.25, shadow xshift=0pt, shadow yshift=-2pt}, draw=cyberCyan!70, line width=0.9pt] at ([yshift=-0.32in]current page.north) {
-        \begin{minipage}{5.2in}
-            \centering
-            % Series Pill Tag
-            \begin{tikzpicture}
-                \node[fill=deepIndigo, text=white, rounded corners=2mm, inner sep=3.5pt, font=\fontsize{7.5}{9.5}\selectfont\bfseries] {
-                    \color{cyberCyan}$\blacktriangleright$\ \color{white}SMART AGRICULTURE \& EDGE AI MOBILE SERIES\ \color{neonEmerald}$\blacktriangleleft$
-                };
-            \end{tikzpicture}\\[2.5pt]
-            {\fontsize{8}{10}\selectfont\color{rbruNavy}\textbf{เอกสารคำสอนและคู่มือปฏิบัติการขั้นสูง \textbullet\ มหาวิทยาลัยราชภัฏรำไพพรรณี}}\\[5pt]
-            
-            % Main Title Line 1
-            {\fontsize{19}{24}\selectfont\bfseries\color{deepIndigo} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[2pt]
-            % Main Title Line 2
-            {\fontsize{25}{30}\selectfont\bfseries\color{agriGreen!90!black} วิเคราะห์โรคในทุเรียน}\\[5pt]
-            % Beginner / No-Code Pill Badge
-            \begin{tikzpicture}
-                \node[fill=softCyanBg!60, draw=techAqua!80, line width=0.8pt, rounded corners=2mm, inner sep=4pt] {
-                    \fontsize{11}{14}\selectfont\bfseries\color{deepIndigo} สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด
-                };
-            \end{tikzpicture}\\[5pt]
-            
-            % English Subtitle
-            {\fontsize{8.5}{11}\selectfont\bfseries\color{deepIndigo!90} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION FOR DURIAN DISEASE ANALYSIS}\\[1.5pt]
-            {\fontsize{7.5}{10}\selectfont\color{gray!80!black} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}
-        \end{minipage}
+    % 2. UPPER SKY ZONE: Transparent Architecture with Dual-Layer Micro Drop-Shadow
+    % Shadow Layer (Soft white glow halo for separation against orchard background)
+    \node[anchor=north, align=center, text width=5.4in] at ([xshift=0.8pt, yshift=-0.29in]current page.north) {
+        \begin{tikzpicture}
+            \node[fill=deepIndigo!85, text=white, rounded corners=2mm, inner sep=3.5pt, font=\fontsize{7.5}{9.5}\selectfont\bfseries] {
+                \color{cyberCyan}$\blacktriangleright$\ \color{white}SMART AGRICULTURE \& EDGE AI MOBILE SERIES\ \color{neonEmerald}$\blacktriangleleft$
+            };
+        \end{tikzpicture}\\[3pt]
+        {\fontsize{8.5}{11}\selectfont\color{white}\textbf{เอกสารคำสอนและคู่มือปฏิบัติการขั้นสูง \textbullet\ มหาวิทยาลัยราชภัฏรำไพพรรณี}}\\[6pt]
+        
+        % Main Title Line 1
+        {\fontsize{20}{25}\selectfont\bfseries\color{white} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[3pt]
+        % Main Title Line 2
+        {\fontsize{26}{32}\selectfont\bfseries\color{white} วิเคราะห์โรคในทุเรียน}\\[6pt]
+        % Beginner Pill Tag
+        \begin{tikzpicture}
+            \node[draw=cyberCyan, line width=1pt, rounded corners=2mm, inner sep=4pt] {
+                \fontsize{11.5}{15}\selectfont\bfseries\color{white} สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด
+            };
+        \end{tikzpicture}\\[6pt]
+        % English Subtitle
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{white} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION FOR DURIAN DISEASE ANALYSIS}\\[1.5pt]
+        {\fontsize{7.5}{10}\selectfont\color{white} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}
     };
 
-    % 3. BOTTOM SOIL ZONE: Glowing Glassmorphic Dark Pill with Author Metadata
-    \node[anchor=south, fill=deepIndigo, fill opacity=1.0, text opacity=1.0, rounded corners=2.5mm, inner sep=8pt, drop shadow={opacity=0.35}, draw=techAmber!70, line width=0.9pt] at ([yshift=0.25in]current page.south) {
-        \begin{minipage}{5.0in}
-            \centering
-            {\fontsize{13.5}{17}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[2.5pt]
-            {\fontsize{8.5}{11}\selectfont\color{white!95} ศูนย์วิจัยฟิสิกส์ดิจิทัลและปัญญาประดิษฐ์ทางการเกษตร คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
-            {\fontsize{8}{10}\selectfont\color{techAmber}\textbf{มหาวิทยาลัยราชภัฏรำไพพรรณี \textbullet\ พ.ศ. 2569}}
-        \end{minipage}
+    % Foreground Layer (Crisp typography floating directly on transparent background)
+    \node[anchor=north, align=center, text width=5.4in] at ([yshift=-0.30in]current page.north) {
+        \begin{tikzpicture}
+            \node[fill=deepIndigo!90, text=white, rounded corners=2mm, inner sep=3.5pt, font=\fontsize{7.5}{9.5}\selectfont\bfseries] {
+                \color{cyberCyan}$\blacktriangleright$\ \color{white}SMART AGRICULTURE \& EDGE AI MOBILE SERIES\ \color{neonEmerald}$\blacktriangleleft$
+            };
+        \end{tikzpicture}\\[3pt]
+        {\fontsize{8.5}{11}\selectfont\color{deepIndigo!90}\textbf{เอกสารคำสอนและคู่มือปฏิบัติการขั้นสูง \textbullet\ มหาวิทยาลัยราชภัฏรำไพพรรณี}}\\[6pt]
+        
+        % Main Title Line 1
+        {\fontsize{20}{25}\selectfont\bfseries\color{deepIndigo} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[3pt]
+        % Main Title Line 2
+        {\fontsize{26}{32}\selectfont\bfseries\color{agriGreen!90!black} วิเคราะห์โรคในทุเรียน}\\[6pt]
+        % Beginner Pill Tag
+        \begin{tikzpicture}
+            \node[draw=cyberCyan!90, line width=1pt, fill=white!40, fill opacity=0.3, text opacity=1.0, rounded corners=2mm, inner sep=4pt] {
+                \fontsize{11.5}{15}\selectfont\bfseries\color{deepIndigo} สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด
+            };
+        \end{tikzpicture}\\[6pt]
+        % English Subtitle
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{deepIndigo!90} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION FOR DURIAN DISEASE ANALYSIS}\\[1.5pt]
+        {\fontsize{7.5}{10}\selectfont\color{deepIndigo!75} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}
+    };
+
+    % 3. BOTTOM SOIL ZONE: Transparent Architecture with Dual-Layer Micro Drop-Shadow
+    % Shadow Layer
+    \node[anchor=south, align=center, text width=5.2in] at ([xshift=0.8pt, yshift=0.21in]current page.south) {
+        {\fontsize{14}{18}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[3pt]
+        {\fontsize{9}{12}\selectfont\bfseries\color{white} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{white} มหาวิทยาลัยราชภัฏรำไพพรรณี \textbullet\ พ.ศ. 2569}
+    };
+    % Foreground Layer
+    \node[anchor=south, align=center, text width=5.2in] at ([yshift=0.22in]current page.south) {
+        {\fontsize{14}{18}\selectfont\bfseries\color{deepIndigo} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[3pt]
+        {\fontsize{9}{12}\selectfont\bfseries\color{deepIndigo!90} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{agriGreen!90!black} มหาวิทยาลัยราชภัฏรำไพพรรณี \textbullet\ พ.ศ. 2569}
     };
 \end{tikzpicture}
 \endgroup
@@ -87,7 +111,7 @@
 
     \node[anchor=center, align=center] at ([yshift=-1.40in]current page.center) {
         {\fontsize{13}{16}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[4pt]
-        {\fontsize{9.5}{12}\selectfont\color{white!90} ศูนย์วิจัยฟิสิกส์ดิจิทัลและปัญญาประดิษฐ์ทางการเกษตร}\\[2pt]
+        {\fontsize{9.5}{12}\selectfont\color{white!90} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม}\\[2pt]
         {\fontsize{9}{12}\selectfont\color{white!75} คณะวิทยาศาสตร์และเทคโนโลยี}\\[4pt]
         {\fontsize{8.5}{11}\selectfont\color{techAmber} มหาวิทยาลัยราชภัฏรำไพพรรณี}
     };

@@ -36,7 +36,15 @@
 ├── docs/                                 # เอกสารคำสอนและคู่มือวิชาการ XeLaTeX มาตรฐานสากล
 │   ├── main.tex                          # ต้นฉบับเอกสารคู่มือ (หน้าปก 3D, หน้าปกในเวกเตอร์ Dark Mode)
 │   ├── main.pdf                          # เอกสารคู่มือฉบับสมบูรณ์ความละเอียดสูง (23 หน้า)
-│   ├── figures/                          # รูปภาพหน้าปกและภาพถ่ายทางการ
+│   ├── figures/                          # คลังภาพหน้าปกทุกเวอร์ชันและภาพถ่ายทางการ
+│   │   ├── cover_art.jpg                 # ภาพปกปัจจุบัน (Active Final Cover Artwork)
+│   │   ├── cover_full_typeset_rendered.png # หน้าปกรวมจัดหน้าและตัวหนังสือสมบูรณ์ความละเอียดสูง
+│   │   ├── cover_v5_exact_authentic_final.jpg # ภาพปกเวอร์ชัน 5 (โครงหน้า ผศ.ดร.ชีวะ 100% ชุด LEQs xAI)
+│   │   ├── cover_v4_leqs_xai_outfit.jpg   # ภาพปกเวอร์ชัน 4 (ชุดขาวสวนทุเรียน LEQs xAI)
+│   │   ├── cover_v3_facial_adaptation.jpg # ภาพปกเวอร์ชัน 3 (ปรับรูปหน้าต้นฉบับ)
+│   │   ├── cover_v2_smartphone_orchard.jpg# ภาพปกเวอร์ชัน 2 (แอปสมาร์ทโฟนส่องใบทุเรียน)
+│   │   ├── cover_v1_concept_pixar.jpg     # ภาพปกเวอร์ชัน 1 (คอนเซปต์ 3D Pixar Durian)
+│   │   └── chewa_official_portrait.png    # ภาพถ่ายทางการ ผศ.ดร.ชีวะ ทัศนา ต้นฉบับ
 │   └── styles/rbruacademic.sty           # เทมเพลตฟอนต์และเลย์เอาต์มหาวิทยาลัยราชภัฏรำไพพรรณี
 ├── models/
 │   └── durian_disease_model.pth          # Checkpoint ค่าน้ำหนักโมเดล PyTorch

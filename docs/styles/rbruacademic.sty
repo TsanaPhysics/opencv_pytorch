@@ -9,11 +9,12 @@
     bottom=1.0in,
     inner=1.5in,
     outer=1.0in,
-    headheight=20pt,
+    headheight=32pt,
     footskip=0.45in,
-    headsep=0.35in
+    headsep=0.25in
 }
 \RequirePackage{enumitem}
+\RequirePackage{amssymb}
 
 % 2. Thai Fonts & Typography
 \RequirePackage{fontspec}
@@ -32,7 +33,7 @@
 \setlength{\parindent}{1.25cm}
 \setlength{\parskip}{4pt plus 1pt minus 1pt}
 
-% 4. Color Palette
+% 4. Color Palette (Modern Futuristic & AgriTech Tone)
 \RequirePackage{xcolor}
 \definecolor{rbruNavy}{HTML}{0D2B45}
 \definecolor{rbruGold}{HTML}{D4AF37}
@@ -42,11 +43,19 @@
 \definecolor{agriDark}{HTML}{0F2027}
 \definecolor{rbruCodeBg}{HTML}{F8F9FA}
 \definecolor{rbruBorder}{HTML}{CFD8DC}
+\definecolor{cyberCyan}{HTML}{00E5FF}
+\definecolor{neonEmerald}{HTML}{00E676}
+\definecolor{deepIndigo}{HTML}{0A192F}
+\definecolor{techAmber}{HTML}{FFD600}
+\definecolor{techAqua}{HTML}{00B4D8}
+\definecolor{techViolet}{HTML}{7B2CBF}
+\definecolor{softCyanBg}{HTML}{E0F7FA}
+\definecolor{softYellowBg}{HTML}{FFFDE7}
 
 % 5. Graphics, TikZ & Tables
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
-\usetikzlibrary{shapes,arrows.meta,positioning,calc,shadows.blur,backgrounds}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,shadows.blur,shadows,backgrounds}
 \RequirePackage{booktabs}
 \RequirePackage{tabularx}
 \RequirePackage{float}
@@ -56,8 +65,8 @@
 
 \DeclareCaptionLabelSeparator{thaisep}{\quad}
 \captionsetup{labelsep=thaisep}
-\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=rbruNavy}, textfont={normalfont}, labelsep=thaisep, justification=raggedleft, singlelinecheck=false}
-\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=rbruNavy}, textfont={normalfont}, labelsep=thaisep}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=deepIndigo}, textfont={normalfont}, labelsep=thaisep, justification=raggedleft, singlelinecheck=false}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=deepIndigo}, textfont={normalfont}, labelsep=thaisep}
 
 \renewcommand{\figurename}{\mbox{ภาพที่}}
 \renewcommand{\tablename}{\mbox{ตารางที่}}
@@ -76,20 +85,20 @@
     enhanced,
     breakable,
     colback=white,
-    colframe=rbruNavy,
+    colframe=deepIndigo,
     fonttitle=\bfseries\fontsize{12}{15}\selectfont\color{white},
     coltitle=white,
-    colbacktitle=rbruNavy,
+    colbacktitle=deepIndigo,
     title={#2},
-    arc=1.5mm,
+    arc=2mm,
     boxrule=0.8pt,
-    leftrule=3.5mm,
-    top=4pt, bottom=4pt, left=8pt, right=8pt,
+    leftrule=4mm,
+    top=5pt, bottom=5pt, left=8pt, right=8pt,
     titlerule=0pt,
-    toptitle=3pt, bottomtitle=3pt,
+    toptitle=3.5pt, bottomtitle=3.5pt,
     drop shadow=black!10,
-    before skip=6pt,
-    after skip=6pt,
+    before skip=7pt,
+    after skip=7pt,
     #1
 }
 
@@ -102,12 +111,31 @@
     coltitle=white,
     colbacktitle=agriGreen,
     title={#2},
-    arc=1.5mm,
+    arc=2mm,
     boxrule=0.8pt,
     leftrule=4mm,
-    top=4pt, bottom=4pt, left=8pt, right=8pt,
-    before skip=6pt,
-    after skip=6pt,
+    top=5pt, bottom=5pt, left=8pt, right=8pt,
+    before skip=7pt,
+    after skip=7pt,
+    #1
+}
+
+\newtcolorbox{nocodebox}[2][]{
+    enhanced,
+    breakable,
+    colback=softCyanBg!35!white,
+    colframe=techAqua!85!black,
+    fonttitle=\bfseries\fontsize{12}{15}\selectfont\color{white},
+    coltitle=white,
+    colbacktitle=techAqua!85!black,
+    title={#2},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    top=5pt, bottom=5pt, left=8pt, right=8pt,
+    drop shadow=techAqua!15,
+    before skip=7pt,
+    after skip=7pt,
     #1
 }
 
@@ -116,25 +144,26 @@
 \widowpenalty=10000
 \displaywidowpenalty=10000
 
-% 8. Chapter and Section Formatting
+% 8. Chapter and Section Formatting (Futuristic Modern Styling)
 \RequirePackage{titlesec}
 
 \newcommand{\rbruchapterbanner}[1]{
     \begin{tcolorbox}[
         enhanced,
         width=\textwidth,
-        arc=0mm,
+        arc=2mm,
         boxrule=0pt,
         top=14pt, bottom=14pt, left=14pt, right=14pt,
-        interior style={left color=rbruNavy!98!black, right color=rbruSlate},
-        borderline east={4pt}{0pt}{rbruGold}
+        interior style={left color=deepIndigo, right color=rbruSlate},
+        borderline east={4pt}{0pt}{neonEmerald},
+        borderline west={4pt}{0pt}{cyberCyan}
     ]
         \raggedleft
-        {\fontsize{38}{44}\selectfont\bfseries\color{white} \chaptertitlename\ \thechapter\par}
+        {\fontsize{34}{40}\selectfont\bfseries\color{cyberCyan} \chaptertitlename\ \thechapter\par}
         \vspace{4pt}
-        {\color{rbruGold}\rule{0.55\textwidth}{2pt}\par}
+        {\color{techAmber}\rule{0.60\textwidth}{2.2pt}\par}
         \vspace{6pt}
-        {\fontsize{22}{28}\selectfont\bfseries\color{white} #1\par}
+        {\fontsize{21}{27}\selectfont\bfseries\color{white} #1\par}
     \end{tcolorbox}
 }
 
@@ -142,14 +171,15 @@
     \begin{tcolorbox}[
         enhanced,
         width=\textwidth,
-        arc=0mm,
+        arc=2mm,
         boxrule=0pt,
         top=14pt, bottom=14pt, left=14pt, right=14pt,
-        interior style={left color=rbruNavy!98!black, right color=rbruSlate},
-        borderline east={4pt}{0pt}{rbruGold}
+        interior style={left color=deepIndigo, right color=rbruSlate},
+        borderline east={4pt}{0pt}{neonEmerald},
+        borderline west={4pt}{0pt}{cyberCyan}
     ]
         \raggedleft
-        {\fontsize{26}{32}\selectfont\bfseries\color{white} #1\par}
+        {\fontsize{24}{30}\selectfont\bfseries\color{white} #1\par}
     \end{tcolorbox}
 }
 
@@ -158,24 +188,24 @@
 \titlespacing*{\chapter}{0pt}{0pt}{18pt}
 
 \titleformat{\section}
-  {\normalfont\fontsize{16}{20}\bfseries\color{rbruNavy}}
-  {\makebox[1.25cm][l]{\thesection}}{0pt}{}
+  {\normalfont\fontsize{15.5}{19.5}\bfseries\color{deepIndigo}}
+  {\makebox[1.25cm][l]{\color{techAqua}\rule[-1pt]{3.5pt}{13pt}\hspace{4pt}\thesection}}{0pt}{}
 \titlespacing*{\section}{0pt}{14pt plus 2pt minus 2pt}{6pt plus 1pt minus 1pt}
 
 \titleformat{\subsection}
-  {\normalfont\fontsize{14}{18}\bfseries\color{agriGreen}}
-  {\makebox[1.25cm][l]{\thesubsection}}{0pt}{}
+  {\normalfont\fontsize{13.5}{17.5}\bfseries\color{agriGreen!90!black}}
+  {\makebox[1.25cm][l]{\color{neonEmerald}\textbullet\hspace{4pt}\thesubsection}}{0pt}{}
 \titlespacing*{\subsection}{1.25cm}{10pt plus 2pt minus 2pt}{4pt plus 1pt minus 1pt}
 
 % Headers and Footers
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE]{\fontsize{10}{12}\selectfont\color{rbruNavy!80}\thepage\quad\textbullet\quad ระบบคอมพิวเตอร์วิทัศน์วิเคราะห์โรคใบทุเรียน}
-\fancyhead[RO]{\fontsize{10}{12}\selectfont\color{rbruNavy!80}\leftmark\quad\textbullet\quad\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[LE]{\fontsize{9.5}{12}\selectfont\color{deepIndigo!85}\thepage\quad\textbullet\quad การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟนวิเคราะห์โรคในทุเรียน}
+\fancyhead[RO]{\fontsize{9.5}{12}\selectfont\color{deepIndigo!85}\leftmark\quad\textbullet\quad\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0pt}
-\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\fontsize{10}{12}\selectfont\thepage}}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\fontsize{9.5}{12}\selectfont\thepage}}
 
 \renewcommand{\chaptermark}[1]{%
     \markboth{%

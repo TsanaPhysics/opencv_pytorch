@@ -37,8 +37,9 @@
 │   ├── main.tex                          # ต้นฉบับเอกสารคู่มือ (หน้าปก 3D, หน้าปกในเวกเตอร์ Dark Mode)
 │   ├── main.pdf                          # เอกสารคู่มือฉบับสมบูรณ์ความละเอียดสูง (23 หน้า)
 │   ├── figures/                          # คลังภาพหน้าปกทุกเวอร์ชันและภาพถ่ายทางการ
-│   │   ├── cover_art.jpg                 # ภาพปกปัจจุบัน (Active Final Cover Artwork)
+│   │   ├── cover_art.jpg                 # ภาพปกปัจจุบัน (Active Final Cover Artwork: Durian xAI AR Mode)
 │   │   ├── cover_full_typeset_rendered.png # หน้าปกรวมจัดหน้าและตัวหนังสือสมบูรณ์ความละเอียดสูง
+│   │   ├── cover_v6_durian_xai_ar.jpg    # ภาพปกเวอร์ชัน 6 (แอป Durian xAI ในโหมด AR Hologram & Grad-CAM)
 │   │   ├── cover_v5_exact_authentic_final.jpg # ภาพปกเวอร์ชัน 5 (โครงหน้า ผศ.ดร.ชีวะ 100% ชุด LEQs xAI)
 │   │   ├── cover_v4_leqs_xai_outfit.jpg   # ภาพปกเวอร์ชัน 4 (ชุดขาวสวนทุเรียน LEQs xAI)
 │   │   ├── cover_v3_facial_adaptation.jpg # ภาพปกเวอร์ชัน 3 (ปรับรูปหน้าต้นฉบับ)

@@ -6,7 +6,7 @@
 **เอกสารวิชาการฉบับเต็ม:** [เอกสารคำสอนและคู่มือฉบับสมบูรณ์ (PDF)](file:///Applications/XAMPP/xamppfiles/htdocs/G3_Agri_Microbiology_SmartFarm/3.6_CV-pytorch/docs/main.pdf)
 
 <p align="center">
-  <img src="docs/figures/cover_art.jpg" width="340" alt="หน้าปกคู่มือการออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟนวิเคราะห์โรคในทุเรียน" />
+  <img src="docs/figures/cover_full_typeset_rendered.png" width="380" alt="หน้าปกคู่มือการออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟนวิเคราะห์โรคในทุเรียน (Concept 1: The Apple-Keynote Bionic Macro)" />
 </p>
 
 ---
@@ -37,10 +37,13 @@
 │   ├── main.tex                          # ต้นฉบับเอกสารคู่มือ (หน้าปก 3D, หน้าปกในเวกเตอร์ Dark Mode)
 │   ├── main.pdf                          # เอกสารคู่มือฉบับสมบูรณ์ความละเอียดสูง (23 หน้า)
 │   ├── figures/                          # คลังภาพหน้าปกทุกเวอร์ชันและภาพถ่ายทางการ
-│   │   ├── cover_art.jpg                 # ภาพปกปัจจุบัน (Active Final Cover Artwork: Durian xAI AR Mode)
-│   │   ├── cover_full_typeset_rendered.png # หน้าปกรวมจัดหน้าและตัวหนังสือสมบูรณ์ความละเอียดสูง
+│   │   ├── cover_art.jpg                 # ภาพปกปัจจุบัน (Active Cover: Concept 1 Apple-Keynote Bionic Macro ในชุดชาวสวนทุเรียน)
+│   │   ├── cover_full_typeset_rendered.png # หน้าปกรวมจัดหน้าและตัวหนังสือสมบูรณ์ความละเอียดสูง (XeLaTeX 200 DPI)
+│   │   ├── cover_v8_concept1_farmer_bionic.jpg # ภาพปกเวอร์ชัน 8 (Concept 1: Bionic Durian Leaf ในชุดชาวสวนทุเรียน - ปกจริง)
+│   │   ├── cover_v9_concept2_cyber_orchard.jpg # ภาพปกเวอร์ชัน 9 (Concept 2: The Cyber-Orchard Visionary โฮโลแกรม 3D สวนทุเรียน)
+│   │   ├── cover_v10_concept3_nocode_obsidian.jpg # ภาพปกเวอร์ชัน 10 (Concept 3: The No-Code Revolution มินิมอล Obsidian & Emerald)
+│   │   ├── cover_v7_bionic_macro_ar.jpg  # ภาพปกเวอร์ชัน 7 (Concept 1: ชุดขาว LEQs xAI)
 │   │   ├── cover_v6_durian_xai_ar.jpg    # ภาพปกเวอร์ชัน 6 (แอป Durian xAI ในโหมด AR Hologram & Grad-CAM)
-│   │   ├── cover_v5_exact_authentic_final.jpg # ภาพปกเวอร์ชัน 5 (โครงหน้า ผศ.ดร.ชีวะ 100% ชุด LEQs xAI)
 │   │   ├── cover_v4_leqs_xai_outfit.jpg   # ภาพปกเวอร์ชัน 4 (ชุดขาวสวนทุเรียน LEQs xAI)
 │   │   ├── cover_v3_facial_adaptation.jpg # ภาพปกเวอร์ชัน 3 (ปรับรูปหน้าต้นฉบับ)
 │   │   ├── cover_v2_smartphone_orchard.jpg# ภาพปกเวอร์ชัน 2 (แอปสมาร์ทโฟนส่องใบทุเรียน)
@@ -99,8 +102,13 @@ python src/predict.py path/to/leaf_image.jpg
 ```bash
 python src/export_edge.py
 ```
+โมเดล ONNX จะถูกเซฟไปที่ `models/durian_disease_model.onnx` พร้อมใช้งานกับ Flutter App
 
 ---
 
-## ☁️ การรันบน Google Colab (No-Code Quick Start)
-เกษตรกรและผู้เริ่มต้นสามารถเปิดไฟล์ `notebooks/durian_leaf_colab_training.ipynb` บน **Google Colab** เพื่อรันบนการ์ดจอ T4 GPU ฟรี เพียงกดปุ่ม **Runtime -> Run all** ระบบจะทำการดาวน์โหลดภาพใบทุเรียน เทรนโมเดล และสร้างรายงานการประเมินผลพร้อมภาพถ่ายความร้อนชี้จุดเกิดโรคให้โดยอัตโนมัติ!
+## 👨‍🏫 ประวัติและข้อมูลผู้พัฒนา
+
+**ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา**  
+สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี  
+มหาวิทยาลัยราชภัฏรำไพพรรณี  
+- เว็บไซต์โครงการ: [TsanaPhysics GitHub](https://github.com/TsanaPhysics/opencv_pytorch)

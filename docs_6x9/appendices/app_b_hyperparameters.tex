@@ -1,0 +1,56 @@
+\chapter{ตารางค่าพารามิเตอร์ของแบบจำลองและการปรับแต่ง}
+\label{app:hyperparameters}
+\index{พารามิเตอร์แบบจำลอง}
+\index{Hyperparameters}
+
+ภาคผนวกนี้รวบรวมรายละเอียดพารามิเตอร์ทั้งหมดของการฝึกฝนโมเดล MobileNetV3-Small โครงสร้างเลเยอร์ และการกำหนดค่าในระบบ Explainable AI เพื่อให้สามารถทำซ้ำผลการทดลอง (Reproducibility) ได้อย่างสมบูรณ์
+
+\section{ตารางค่าไฮเปอร์พารามิเตอร์สำหรับการฝึกฝนโมเดล (Training Configurations)}
+
+\begin{table}[H]
+\caption{รายละเอียดการตั้งค่าไฮเปอร์พารามิเตอร์สำหรับการฝึกฝนโมเดล MobileNetV3-Small}
+\label{tab:app_b_hyperparams}
+\begin{tabularx}{\textwidth}{L{3.2cm}L{2.6cm}Y}
+\toprule
+\textbf{ชื่อพารามิเตอร์} & \textbf{ค่าที่กำหนดใช้งาน} & \textbf{คำอธิบายเหตุผลทางเทคนิค} \\
+\midrule
+Image Resolution & $224 \times 224 \times 3$ & ขนาดมาตรฐานที่สมดุลระหว่างความละเอียดและขนาดเทนเซอร์ \\
+Batch Size & $32$ & ขนาดบัตช์ที่เหมาะสมกับหน่วยความจำ GPU และการคำนวณ Gradient \\
+Optimizer & AdamW & ใช้อัลกอริทึม Adam ร่วมกับ Decoupled Weight Decay \\
+Initial Learning Rate & $5 \times 10^{-4}$ ($0.0005$) & อัตราการเรียนรู้เริ่มต้นที่เหมาะสมสำหรับการทำ Fine-tuning \\
+Learning Rate Scheduler & CosineAnnealingLR & ค่อยๆ ปรับลด LR ตามแนวคลื่นโคไซน์สู่ค่าต่ำสุด $1 \times 10^{-6}$ \\
+Weight Decay & $1 \times 10^{-2}$ ($0.01$) & ควบคุมค่าสัมประสิทธิ์ $L_2$ Regularization ป้องกัน Overfitting \\
+Dropout Probability & $0.30$ & สุ่มตัดการเชื่อมต่อร้อยละ 30 ในชั้น Classifier Head \\
+Loss Function & CrossEntropyLoss & ใช้คำนวณความสูญเสียแบบหลายคลาสร่วมกับ Softmax \\
+Epochs & $25$ & จำนวนรอบการเทรนที่โมเดลลู่เข้าสู่ค่าความแม่นยำสูงสุด \\
+Early Stopping Patience & $7$ Epochs & หยุดการเทรนทันทีหาก Validation Loss ไม่ดีขึ้นต่อเนื่อง 7 รอบ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{ตารางโครงสร้างเลเยอร์ของโมเดล MobileNetV3-Small}
+
+\begin{table}[H]
+\caption{โครงสร้างสถาปัตยกรรมภายในและขนาด Feature Map ของ MobileNetV3-Small}
+\label{tab:app_b_layers}
+\begin{tabularx}{\textwidth}{L{2.8cm}C{1.8cm}C{1.8cm}C{1.6cm}Z}
+\toprule
+\textbf{บล็อก / เลเยอร์} & \textbf{ขนาด Input} & \textbf{เคอร์เนล / ขยาย} & \textbf{SE Module} & \textbf{ขนาด Output} \\
+\midrule
+Conv2d 3x3 & $224 \times 224 \times 3$ & Stride 2 & ไม่ใช้ & $112 \times 112 \times 16$ \\
+bneck (Inverted) & $112 \times 112 \times 16$ & k3 / exp 16 & มี (SE) & $56 \times 56 \times 16$ \\
+bneck & $56 \times 56 \times 16$ & k3 / exp 72 & ไม่ใช้ & $28 \times 28 \times 24$ \\
+bneck & $28 \times 28 \times 24$ & k3 / exp 88 & ไม่ใช้ & $28 \times 28 \times 24$ \\
+bneck & $28 \times 28 \times 24$ & k5 / exp 96 & มี (SE) & $14 \times 14 \times 40$ \\
+bneck & $14 \times 14 \times 40$ & k5 / exp 240 & มี (SE) & $14 \times 14 \times 40$ \\
+bneck & $14 \times 14 \times 40$ & k5 / exp 120 & มี (SE) & $14 \times 14 \times 48$ \\
+bneck & $14 \times 14 \times 48$ & k5 / exp 144 & มี (SE) & $14 \times 14 \times 48$ \\
+bneck & $14 \times 14 \times 48$ & k5 / exp 288 & มี (SE) & $7 \times 7 \times 96$ \\
+bneck & $7 \times 7 \times 96$ & k5 / exp 576 & มี (SE) & $7 \times 7 \times 96$ \\
+Conv2d 1x1 & $7 \times 7 \times 96$ & Stride 1 & ไม่ใช้ & $7 \times 7 \times 576$ \\
+AdaptiveAvgPool & $7 \times 7 \times 576$ & Global Pool & - & $1 \times 1 \times 576$ \\
+Linear Head 1 & $1 \times 1 \times 576$ & Hard-Swish & - & $1024$ \\
+Linear Head 2 & $1024$ & Dropout 0.3 & - & $\mathbf{4} \text{ (คลาสโรค)}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}

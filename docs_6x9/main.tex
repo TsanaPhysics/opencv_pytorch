@@ -1,0 +1,189 @@
+\documentclass[11pt,twoside,openright]{book}
+
+\usepackage{styles/rbruacademic}
+
+\begin{document}
+
+% -------------------------------------------------------------
+% หน้าปกหนังสือ (Cover Page - Concept 2 Cyber-Orchard Visionary)
+% -------------------------------------------------------------
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent\begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=center, inner sep=0pt] at (current page.center) {
+        \includegraphics[width=\paperwidth,height=\paperheight]{cover_concept2.pdf}
+    };
+\end{tikzpicture}
+\end{titlepage}
+\restoregeometry
+
+\cleardoublepage
+
+% -------------------------------------------------------------
+% หน้าปกในเวกเตอร์ Dark Mode (Vector Inner Title Page)
+% -------------------------------------------------------------
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\pagecolor{black!94}
+\begingroup
+\setlength{\XeTeXlinebreakskip}{0pt}
+\begin{tikzpicture}[remember picture, overlay]
+    \draw[color=cyberCyan!50, line width=1.5pt] ([yshift=-1.05in]current page.north) circle (0.62in);
+    \draw[color=neonEmerald!40, dashed, thick] ([yshift=-1.05in]current page.north) circle (0.80in);
+    \draw[color=techAmber!30, dotted, thick] ([yshift=-1.05in]current page.north) circle (0.98in);
+    
+    \node[anchor=center, align=center] at ([yshift=0.50in]current page.center) {
+        {\fontsize{8.5}{11}\selectfont\bfseries\color{cyberCyan} SMART AGRICULTURE \& EDGE AI MOBILE SERIES}\\[8pt]
+        {\fontsize{18}{23}\selectfont\bfseries\color{white} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[5pt]
+        {\fontsize{24}{29}\selectfont\bfseries\color{neonEmerald} วิเคราะห์โรคในทุเรียน}\\[8pt]
+        {\fontsize{12}{15}\selectfont\bfseries\color{techAmber} [สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด]}\\[14pt]
+        {\fontsize{9}{12}\selectfont\color{white!85} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION}\\[2pt]
+        {\fontsize{9}{12}\selectfont\color{white!85} FOR DURIAN DISEASE ANALYSIS}\\[4pt]
+        {\fontsize{8}{11}\selectfont\color{cyberCyan!80} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}\\[14pt]
+        {\color{cyberCyan!70}\rule{0.65\textwidth}{1.5pt}}
+    };
+
+    \node[anchor=center, align=center] at ([yshift=-1.40in]current page.center) {
+        {\fontsize{13}{16}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[4pt]
+        {\fontsize{9.5}{12}\selectfont\color{white!90} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม}\\[2pt]
+        {\fontsize{9}{12}\selectfont\color{white!75} คณะวิทยาศาสตร์และเทคโนโลยี}\\[4pt]
+        {\fontsize{8.5}{11}\selectfont\color{techAmber} มหาวิทยาลัยราชภัฏรำไพพรรณี}
+    };
+\end{tikzpicture}
+\endgroup
+\newpage
+\pagecolor{white}
+\end{titlepage}
+\restoregeometry
+\cleardoublepage
+
+% -------------------------------------------------------------
+% Frontmatter: คำนำ, สารบัญ
+% -------------------------------------------------------------
+\frontmatter
+\chapter*{คำนำ}
+\addcontentsline{toc}{chapter}{คำนำ}
+
+เอกสารคำสอนและตำราวิชาการฉบับนี้ จัดทำขึ้นเพื่อรวบรวมองค์ความรู้ด้านการบูรณาการเทคโนโลยีคอมพิวเตอร์วิทัศน์ (\textbf{Computer Vision}) และการเรียนรู้เชิงลึก (\textbf{Deep Learning}) เข้ากับงานพยาธิวิทยาพืช (\textbf{Plant Pathology}) โดยมุ่งเน้นการแก้ปัญหาโรคใบทุเรียนซึ่งเป็นพืชเศรษฐกิจหลักของภาคตะวันออกและประเทศไทยอย่างเป็นระบบ
+
+เนื้อหาในเล่มได้รับการปรับปรุงและจัดแบ่งออกเป็น \textbf{7 บทเรียนสมบูรณ์} ครอบคลุมตั้งแต่:
+\begin{enumerate}[leftmargin=2em, itemsep=2pt]
+    \item วิทยาการโรคใบทุเรียนและสถาปัตยกรรมเกษตรอัจฉริยะ (Edge AI Paradigm)
+    \item การประมวลผลภาพดิจิทัลและการรวบรวมเตรียมชุดข้อมูลใบทุเรียน
+    \item สถาปัตยกรรมโครงข่ายประสาทเทียมคอนโวลูชันและการเรียนรู้แบบถ่ายโอน (MobileNetV3)
+    \item การฝึกฝนและการประเมินประสิทธิภาพแบบจำลองด้วย PyTorch
+    \item ปัญญาประดิษฐ์อธิบายได้ (Explainable AI: Grad-CAM) และการตรวจหาตำแหน่งรอยโรค
+    \item การแปลงและปรับแต่งโมเดลสู่สถาปัตยกรรม Edge AI (ONNX \& Quantization INT8)
+    \item การพัฒนาแอปพลิเคชันสมาร์ทโฟน (Flutter) และการประยุกต์ใช้งานจริงในแปลงเกษตร
+\end{enumerate}
+
+จุดเด่นของตำราเล่มนี้คือการออกแบบกระบวนการเรียนรู้แบบ \textbf{No-Code \& Beginner-Friendly} ควบคู่ไปกับโค้ดภาษา Python และ PyTorch เชิงลึก ช่วยให้ผู้เริ่มต้นและผู้ที่ไม่มีพื้นฐานการเขียนโปรแกรม สามารถสร้าง พัฒนา และประยุกต์ใช้โมเดลปัญญาประดิษฐ์ตรวจโรคพืชบนสมาร์ทโฟนได้จริง พร้อมระบบ Explainable AI (Grad-CAM) ที่แสดงภาพความร้อนชี้ตำแหน่งรอยโรคเพื่อยืนยันความถูกต้องทางพยาธิวิทยา
+
+ผู้เขียนหวังเป็นอย่างยิ่งว่า ตำราเล่มนี้จะเป็นประโยชน์ต่อนักศึกษา เกษตรกรชาวสวนทุเรียน นักวิจัย และผู้สนใจในการพัฒนานวัตกรรมเกษตรอัจฉริยะอย่างยั่งยืน
+
+\vspace{1.5cm}
+\begin{flushright}
+\textbf{ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\
+มหาวิทยาลัยราชภัฏรำไพพรรณี\\
+พ.ศ. 2569
+\end{flushright}
+
+\clearpage
+\tableofcontents
+\clearpage
+\listoftables
+\clearpage
+\listoffigures
+\clearpage
+
+% -------------------------------------------------------------
+% Mainmatter: บทเนื้อหาหลัก 7 บท
+% -------------------------------------------------------------
+\mainmatter
+
+\include{chapters/ch01_durian_ai}
+\include{chapters/ch02_image_processing}
+\include{chapters/ch03_cnn_mobilenet}
+\include{chapters/ch04_pytorch_training}
+\include{chapters/ch05_explainable_ai}
+\include{chapters/ch06_edge_optimization}
+\include{chapters/ch07_mobile_application}
+
+% -------------------------------------------------------------
+% Appendices: ภาคผนวก ก, ข, ค, ง
+% -------------------------------------------------------------
+\appendix
+\include{appendices/app_a_environment}
+\include{appendices/app_b_hyperparameters}
+\include{appendices/app_c_glossary}
+\include{appendices/app_d_prompts}
+
+
+% -------------------------------------------------------------
+% Bibliography: บรรณานุกรมมาตรฐาน APA 7
+% -------------------------------------------------------------
+\include{bibliography}
+
+% -------------------------------------------------------------
+% Index: ดรรชนีสืบค้น
+% -------------------------------------------------------------
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{ดรรชนีสืบค้น}
+\printindex
+
+% -------------------------------------------------------------
+% Backmatter: ประวัติผู้เขียน
+% -------------------------------------------------------------
+\backmatter
+\chapter*{ประวัติผู้เขียน}
+\addcontentsline{toc}{chapter}{ประวัติผู้เขียน}
+
+\vspace{-4pt}
+\noindent
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \begin{tikzpicture}
+        \draw[techAqua, line width=2pt] (0,0) circle (1.35cm);
+        \begin{scope}
+            \clip (0,0) circle (1.32cm);
+            \node at (0,0) {\includegraphics[width=2.8cm, height=2.8cm, keepaspectratio]{figures/chewa_official_portrait.jpg}};
+        \end{scope}
+    \end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.69\textwidth}
+    {\fontsize{14}{18}\selectfont\bfseries\color{deepIndigo} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[3pt]
+    {\fontsize{10}{13}\selectfont\color{agriGreen}\textbf{ตำแหน่งทางวิชาการ: ผู้ช่วยศาสตราจารย์ สาขาวิชาฟิสิกส์}}\\[2pt]
+    {\fontsize{9.5}{12}\selectfont คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี}\\[2pt]
+    {\fontsize{9}{11}\selectfont อีเมล: chewathassana@rbru.ac.th}
+\end{minipage}
+
+\vspace{8pt}
+{\color{rbruBorder}\hrule height 0.8pt}
+\vspace{8pt}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    {\fontsize{11}{14}\selectfont\bfseries\color{deepIndigo} ประวัติการศึกษา}\\[4pt]
+    {\fontsize{9}{12}\selectfont
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item \textbf{ปร.ด. (ฟิสิกส์ประยุกต์)}\\สถาบันเทคโนโลยีพระจอมเกล้า\\เจ้าคุณทหารลาดกระบัง
+        \item \textbf{วท.ม. (ฟิสิกส์ประยุกต์)}\\สถาบันเทคโนโลยีพระจอมเกล้า\\เจ้าคุณทหารลาดกระบัง
+        \item \textbf{วท.บ. ฟิสิกส์ (คอมพิวเตอร์และอิเล็กทรอนิกส์)}\\มหาวิทยาลัยนเรศวร
+    \end{itemize}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    {\fontsize{11}{14}\selectfont\bfseries\color{deepIndigo} ความเชี่ยวชาญและงานวิจัย}\\[4pt]
+    {\fontsize{9}{12}\selectfont
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item ฟิสิกส์เกษตรดิจิทัลและไอโอที\\(AIoT SmartFarm)
+        \item ปัญญาประดิษฐ์และการเรียนรู้เชิงลึก\\(Computer Vision)
+        \item การคำนวณโครงสร้างสารแม่เหล็ก\\และควอนตัมฟิสิกส์
+    \end{itemize}}
+\end{minipage}
+
+\end{document}

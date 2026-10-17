@@ -1,0 +1,42 @@
+name: durian_leaf_doctor
+description: "หมอใบทุเรียน — ตรวจโรคใบทุเรียนด้วยปัญญาประดิษฐ์ ทำงานในเครื่อง (ออฟไลน์)"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  onnxruntime: ^1.4.1        # รันโมเดล ONNX ในเครื่อง (Android/iOS)
+  camera: ^0.11.0            # โหมดตรวจแบบสด
+  image_picker: ^1.1.2       # ถ่ายรูป / เลือกจากคลังรูป
+  image: ^4.2.0              # ถอดรหัส หมุนตาม EXIF ย่อภาพ
+  path_provider: ^2.1.4      # ที่เก็บประวัติการตรวจ
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/model/
+    - assets/samples/
+  fonts:
+    - family: Mitr
+      fonts:
+        - asset: assets/fonts/Mitr-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Mitr-SemiBold.ttf
+          weight: 600
+    - family: IBMPlexSansThai
+      fonts:
+        - asset: assets/fonts/IBMPlexSansThai-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IBMPlexSansThai-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansThai-SemiBold.ttf
+          weight: 600

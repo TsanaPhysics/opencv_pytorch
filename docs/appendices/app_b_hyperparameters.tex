@@ -10,7 +10,7 @@
 \begin{table}[H]
 \caption{รายละเอียดการตั้งค่าไฮเปอร์พารามิเตอร์สำหรับการฝึกฝนโมเดล MobileNetV3-Small}
 \label{tab:app_b_hyperparams}
-\begin{tabularx}{\textwidth}{p{4.2cm}p{3.2cm}X}
+\begin{tabularx}{\textwidth}{L{4.2cm}L{3.2cm}Y}
 \toprule
 \textbf{ชื่อพารามิเตอร์} & \textbf{ค่าที่กำหนดใช้งาน} & \textbf{คำอธิบายเหตุผลทางเทคนิค} \\
 \midrule
@@ -33,8 +33,7 @@ Early Stopping Patience & $7$ Epochs & หยุดการเทรนทั�
 \begin{table}[H]
 \caption{โครงสร้างสถาปัตยกรรมภายในและขนาด Feature Map ของ MobileNetV3-Small}
 \label{tab:app_b_layers}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lllll}
+\begin{tabularx}{\textwidth}{L{3.4cm}C{2.4cm}C{2.4cm}C{2.0cm}Z}
 \toprule
 \textbf{บล็อก / เลเยอร์} & \textbf{ขนาด Input} & \textbf{เคอร์เนล / ขยาย} & \textbf{SE Module} & \textbf{ขนาด Output} \\
 \midrule
@@ -53,6 +52,5 @@ AdaptiveAvgPool & $7 \times 7 \times 576$ & Global Pool & - & $1 \times 1 \times
 Linear Head 1 & $1 \times 1 \times 576$ & Hard-Swish & - & $1024$ \\
 Linear Head 2 & $1024$ & Dropout 0.3 & - & $\mathbf{4} \text{ (คลาสโรค)}$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabularx}
 \end{table}

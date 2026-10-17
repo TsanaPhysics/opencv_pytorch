@@ -1,0 +1,679 @@
+<title>หมอใบทุเรียน</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#1f4d33">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<style>
+/* Layout: แอปคอลัมน์เดียวสำหรับมือถือ (กว้างสุด 560px) หัวแอปติดบน + แถบเมนูล่าง 3 แท็บ
+   สี: เขียวผิวใบทุเรียนด้านบน + ทองแดงของเกล็ดใต้ใบทุเรียน (ลักษณะเฉพาะของใบทุเรียน) */
+:root{
+  --bg:#eef2ec; --surface:#ffffff; --surface-2:#e3eade; --fg:#14231a; --muted:#566457; --line:#cdd8c8;
+  --leaf:#1f4d33; --leaf-ink:#ffffff; --bronze:#9a6a1f; --bronze-soft:#f1e3c7;
+  --good:#1d7a45; --good-bg:#dff1e5; --warn:#a36200; --warn-bg:#fbedd2; --bad:#b3261e; --bad-bg:#f9dedb;
+  --font-display:"Mitr","IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Thai","Noto Sans Thai","Sarabun",system-ui,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1611; --surface:#15221a; --surface-2:#1c2c22; --fg:#e7efe8; --muted:#9db0a2; --line:#2a3d31;
+  --leaf:#7fc49a; --leaf-ink:#0d1611; --bronze:#d9a656; --bronze-soft:#3a2d17;
+  --good:#6fd39a; --good-bg:#183a27; --warn:#f0b45a; --warn-bg:#3d2d12; --bad:#ff8a80; --bad-bg:#43201d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1611; --surface:#15221a; --surface-2:#1c2c22; --fg:#e7efe8; --muted:#9db0a2; --line:#2a3d31;
+  --leaf:#7fc49a; --leaf-ink:#0d1611; --bronze:#d9a656; --bronze-soft:#3a2d17;
+  --good:#6fd39a; --good-bg:#183a27; --warn:#f0b45a; --warn-bg:#3d2d12; --bad:#ff8a80; --bad-bg:#43201d; color-scheme:dark}
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--leaf)}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;line-height:1.3;text-wrap:balance;margin:0}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--bronze);outline-offset:2px}
+
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--leaf);color:var(--leaf-ink);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.topbar-in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.brand svg{flex:none}
+.brand h1{font-size:1.25rem;font-weight:600}
+.brand small{display:block;font-size:.75rem;opacity:.85;font-family:var(--font-body);font-weight:400;letter-spacing:.01em}
+.chip{font-size:.75rem;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--bronze-soft);display:inline-block}
+.chip.ready i{background:#8fe0ae}
+.chip.err i{background:#ff8a80}
+
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px calc(96px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:16px}
+.panel{display:grid;gap:16px}
+
+/* ปุ่มหลัก */
+.capture{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px}
+.capture h2{font-size:1.15rem}
+.capture p{color:var(--muted);font-size:.95rem}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:12px;border:0;cursor:pointer;font-weight:600;font-size:1rem;padding:10px 14px;text-align:center}
+.btn-primary{background:var(--leaf);color:var(--leaf-ink)}
+.btn-secondary{background:var(--surface-2);color:var(--fg);border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn svg{flex:none}
+input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+.samples{display:grid;gap:8px}
+.samples-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.samples-head span{font-size:.85rem;color:var(--muted)}
+.sample-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sample{border:2px solid transparent;border-radius:10px;padding:0;overflow:hidden;cursor:pointer;background:var(--surface-2);aspect-ratio:1;max-width:100%}
+.sample img{width:100%;height:100%;object-fit:cover;display:block}
+.sample[aria-pressed="true"]{border-color:var(--bronze)}
+
+.tips{display:grid;gap:8px;font-size:.92rem}
+.tips summary{cursor:pointer;font-weight:600}
+.tips ul{margin:8px 0 0;padding-left:1.2em;color:var(--muted);display:grid;gap:4px}
+
+/* ผลการตรวจ */
+.result{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.leafband{height:6px;background:linear-gradient(90deg,var(--leaf) 0 62%,var(--bronze) 62% 100%)}
+.result-body{padding:16px;display:grid;gap:16px}
+.tag{display:inline-block;font-size:.75rem;letter-spacing:.04em;padding:2px 8px;border-radius:6px;background:var(--bronze-soft);color:var(--bronze);font-weight:600}
+.dx{display:grid;gap:4px}
+.dx h2{font-size:1.5rem}
+.dx .en{color:var(--muted);font-size:.9rem}
+.dx .pathogen{font-size:.9rem;color:var(--muted)}
+.dx .pathogen em{color:var(--fg)}
+
+.photo{position:relative;border-radius:12px;overflow:hidden;background:var(--surface-2);aspect-ratio:1;max-width:100%}
+.photo canvas{width:100%;height:100%;display:block}
+.cam-ctl{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--muted)}
+.cam-ctl input{flex:1;accent-color:var(--bronze)}
+.cam-legend{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
+.cam-legend .bar{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#00008f,#0040ff,#00ffff,#80ff80,#ffff00,#ff4000,#800000)}
+
+.verdict{border-radius:12px;padding:12px 14px;display:grid;gap:4px}
+.verdict strong{font-family:var(--font-display);font-weight:500;font-size:1.05rem}
+.verdict p{font-size:.92rem}
+.v-good{background:var(--good-bg);color:var(--good)}
+.v-warn{background:var(--warn-bg);color:var(--warn)}
+.v-bad{background:var(--bad-bg);color:var(--bad)}
+.verdict p{color:var(--fg)}
+
+.gauge{display:grid;gap:6px}
+.gauge-top{display:flex;justify-content:space-between;align-items:baseline}
+.gauge-top b{font-family:var(--font-display);font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums}
+.scale{position:relative;height:14px;border-radius:7px;background:linear-gradient(90deg,var(--bad-bg) 0 60%,var(--warn-bg) 60% 85%,var(--good-bg) 85% 100%);border:1px solid var(--line)}
+.scale .fill{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:var(--fg);opacity:.85;transition:width .5s ease}
+.scale-ticks{position:relative;height:18px;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.scale-ticks span{position:absolute;transform:translateX(-50%)}
+
+.probs{display:grid;gap:8px}
+.prob{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;font-size:.9rem}
+.prob .pbar{grid-column:1/-1;height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.prob .pbar i{display:block;height:100%;background:var(--muted)}
+.prob.top .pbar i{background:var(--leaf)}
+.prob b{font-variant-numeric:tabular-nums;font-weight:600}
+
+.info{display:grid;gap:10px}
+.info h3{font-size:1rem}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;background:var(--bg)}
+.env{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.env div{display:grid;gap:2px;font-size:.8rem;color:var(--muted)}
+.env b{font-size:1rem;color:var(--fg);font-variant-numeric:tabular-nums}
+.note{font-size:.82rem;color:var(--muted)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* สถานะกำลังโหลด */
+.loading{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px;text-align:center;color:var(--muted)}
+.progress{height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--bronze);transition:width .2s}
+.err-box{background:var(--bad-bg);color:var(--bad);border-radius:12px;padding:12px 14px;font-size:.92rem}
+
+/* ประวัติ */
+.hist-list{display:grid;gap:10px}
+.hitem{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px;cursor:pointer;text-align:left;width:100%}
+.hitem img{width:64px;height:64px;object-fit:cover;border-radius:8px;display:block}
+.hitem b{display:block;font-weight:600}
+.hitem span{font-size:.8rem;color:var(--muted)}
+.pill{font-size:.78rem;padding:2px 8px;border-radius:999px;font-weight:600;font-variant-numeric:tabular-nums}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:24px;text-align:center;color:var(--muted);display:grid;gap:8px}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.9rem}
+
+/* เกี่ยวกับ */
+.about{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px}
+.about h2{font-size:1.15rem}
+.about h3{font-size:1rem}
+.about ol,.about ul{margin:0;padding-left:1.3em;display:grid;gap:4px}
+.stat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{font-family:var(--font-display);font-size:1.25rem;white-space:nowrap;font-weight:600;display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:.8rem;color:var(--muted)}
+.credit{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:.85rem;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.tbl td:not(:first-child),.tbl th:not(:first-child){text-align:right}
+
+/* แถบเมนูล่าง */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.tab{background:none;border:0;cursor:pointer;display:grid;justify-items:center;gap:2px;padding:8px 4px 10px;font-size:.8rem;color:var(--muted)}
+.tab[aria-selected="true"]{color:var(--leaf);font-weight:600}
+.tab[aria-selected="true"] svg{stroke:var(--leaf)}
+.tab svg{stroke:var(--muted)}
+
+
+/* โหมดกล้องสด: หน้าจอเต็มสีเข้มเสมอ (ตั้งใจให้เป็นธีมเดียว เหมือนช่องมองภาพกล้อง) */
+.btn-live{grid-column:1/-1;background:var(--bronze-soft);color:var(--bronze);border:1px solid var(--bronze)}
+.btn-live .dot{width:10px;height:10px;border-radius:50%;background:#d93025;box-shadow:0 0 0 3px rgba(217,48,37,.25)}
+.live{position:fixed;inset:0;z-index:20;background:#0b0f0c;color:#eef3ee;display:flex;flex-direction:column;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+.live-in{width:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:10px;height:100%;min-height:0}
+.live-top{display:flex;align-items:center;gap:8px;padding-block:8px}
+.live-top h2{flex:1;font-size:1.05rem;display:flex;align-items:center;gap:8px;color:#eef3ee}
+.live-top h2 i{width:9px;height:9px;border-radius:50%;background:#d93025;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#eef3ee;display:grid;place-items:center;cursor:pointer}
+.icon-btn[aria-pressed="true"]{background:#d9a656;color:#0b0f0c;border-color:#d9a656}
+.viewport{position:relative;width:100%;max-width:min(100%,calc(100vh - 330px));min-width:min(100%,240px);aspect-ratio:1;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;flex:none}
+.viewport video{width:100%;height:100%;object-fit:cover;display:block}
+.viewport canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.viewport .corner{position:absolute;width:34px;height:34px;border:3px solid rgba(255,255,255,.85);pointer-events:none}
+.corner.tl{top:12px;left:12px;border-right:0;border-bottom:0;border-radius:10px 0 0 0}.corner.tr{top:12px;right:12px;border-left:0;border-bottom:0;border-radius:0 10px 0 0}
+.corner.bl{bottom:12px;left:12px;border-right:0;border-top:0;border-radius:0 0 0 10px}.corner.br{bottom:12px;right:12px;border-left:0;border-top:0;border-radius:0 0 10px 0}
+.live-msg{white-space:pre-line;position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;font-size:.95rem;color:#eef3ee;background:rgba(0,0,0,.55)}
+.live-panel{background:#152019;border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.live-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.live-row b{font-family:var(--font-display);font-size:1.25rem;font-weight:600;color:#fff;min-width:0}
+.live-row span{font-variant-numeric:tabular-nums;font-family:var(--font-display);font-size:1.25rem;color:#fff}
+.live-bar{height:10px;border-radius:5px;background:linear-gradient(90deg,#43201d 0 60%,#3d2d12 60% 85%,#183a27 85% 100%);overflow:hidden}
+.live-bar i{display:block;height:100%;background:#eef3ee;transition:width .25s}
+.live-sub{display:flex;justify-content:space-between;gap:8px;font-size:.85rem;color:#a9bcae;flex-wrap:wrap}
+.state{padding:2px 10px;border-radius:999px;font-weight:600;font-size:.8rem}
+.state.ok{background:#183a27;color:#6fd39a}.state.wait{background:#3d2d12;color:#f0b45a}.state.bad{background:#43201d;color:#ff8a80}
+.live-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:auto;padding-bottom:8px}
+.btn-shot{min-height:60px;border-radius:14px;border:0;background:#d9a656;color:#0b0f0c;font-weight:600;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-shot:disabled{opacity:.45}
+@media (prefers-reduced-motion: reduce){.live-top h2 i{animation:none}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M7 27C6 15 14 6 28 5c1 13-7 22-19 23z" fill="#d9a656"/><path d="M8 26C12 19 17 13 25 8" stroke="#1f4d33" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M7 27C6 15 14 6 28 5" fill="none" stroke="#f6e7c7" stroke-width="1.2"/></svg>
+      <div><h1>หมอใบทุเรียน</h1><small>ตรวจโรคใบทุเรียนด้วยปัญญาประดิษฐ์ · ทำงานในเครื่อง</small></div>
+    </div>
+    <div class="chip" id="status" role="status"><i></i><span>กำลังเตรียมโมเดล</span></div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- แท็บ: ตรวจใบ -->
+  <section class="panel" id="panel-scan" role="tabpanel" aria-labelledby="tab-scan">
+    <div class="capture">
+      <div><h2>ถ่ายรูปใบทุเรียนที่สงสัย</h2><p>ถ่ายใบเดียวให้เต็มกรอบ ระบบจะบอกโรคที่น่าจะเป็น พร้อมแนวทางจัดการ รูปไม่ถูกส่งออกจากเครื่อง</p></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-camera" type="button" disabled>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>ถ่ายรูป</button>
+        <button class="btn btn-secondary" id="btn-gallery" type="button" disabled>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></svg>คลังรูป</button>
+        <button class="btn btn-live" id="btn-live" type="button" disabled><span class="dot" aria-hidden="true"></span>ตรวจแบบสดผ่านกล้อง</button>
+      </div>
+      <input type="file" id="file-camera" accept="image/*" capture="environment">
+      <input type="file" id="file-gallery" accept="image/*">
+      <div class="samples">
+        <div class="samples-head"><b>หรือลองกับรูปตัวอย่าง</b><span>รูปจริงจากชุดทดสอบ</span></div>
+        <div class="sample-grid" id="samples"></div>
+      </div>
+      <details class="tips"><summary>ถ่ายอย่างไรให้ได้ผลแม่น</summary>
+        <ul><li>ถ่ายใบเดียว ให้ใบเต็มกรอบประมาณ 2 ใน 3 ของรูป</li><li>ใช้แสงธรรมชาติ ไม่ย้อนแสง ไม่เบลอ</li><li>ให้เห็นแผลหรือจุดผิดปกติชัดเจน ถ้าแผลเล็กให้ถ่ายใกล้ขึ้น</li><li>ถ้าผลขึ้นว่า "ยังไม่แน่ใจ" ให้ถ่ายใหม่อีกมุมหนึ่ง</li></ul>
+      </details>
+    </div>
+
+    <div class="loading" id="loading">
+      <b id="loading-title">กำลังเตรียมโมเดลตรวจโรค</b>
+      <div class="progress"><i id="loading-bar"></i></div>
+      <span class="note" id="loading-note">โหลดครั้งแรกประมาณ 17 MB หลังจากนั้นตรวจได้ทันทีในเครื่อง</span>
+    </div>
+    <div class="err-box" id="error" hidden></div>
+
+    <article class="result" id="result" hidden aria-live="polite">
+      <div class="leafband"></div>
+      <div class="result-body">
+        <div class="dx">
+          <span><span class="tag" id="r-tag">ผลตรวจ</span></span>
+          <h2 id="r-name">-</h2>
+          <span class="en" id="r-en">-</span>
+          <span class="pathogen" id="r-pathogen"></span>
+        </div>
+        <div class="verdict" id="r-verdict"><strong id="r-vtitle"></strong><p id="r-vtext"></p></div>
+        <div class="gauge">
+          <div class="gauge-top"><span>ความมั่นใจของผลตรวจ</span><b id="r-conf">-</b></div>
+          <div class="scale" aria-hidden="true"><div class="fill" id="r-fill" style="width:0"></div></div>
+          <div class="scale-ticks" aria-hidden="true"><span style="left:0;transform:none">0</span><span style="left:60%">60</span><span style="left:85%">85</span><span style="right:0;transform:none">100%</span></div>
+        </div>
+        <div class="photo"><canvas id="r-canvas" width="448" height="448" aria-label="รูปใบที่ตรวจ พร้อมแผนที่จุดที่ปัญญาประดิษฐ์ใช้ตัดสิน"></canvas></div>
+        <label class="cam-ctl" for="cam-alpha">แผนที่จุดที่ใช้ตัดสิน<input type="range" id="cam-alpha" min="0" max="80" value="45"></label>
+        <div class="cam-legend"><span>สนใจน้อย</span><div class="bar"></div><span>สนใจมาก</span></div>
+        <div class="probs" id="r-probs"></div>
+        <div class="info">
+          <h3>แนวทางจัดการ</h3>
+          <div class="box"><p id="r-guide"></p></div>
+          <div id="r-env-wrap" hidden>
+            <h3>สภาพอากาศที่ส่งเสริมให้โรคระบาด</h3>
+            <div class="box"><div class="env"><div>ความชื้นสัมพัทธ์<b id="r-rh"></b></div><div>อุณหภูมิ<b id="r-temp"></b></div><div>ช่วงเสี่ยง<b id="r-season" style="font-size:.85rem"></b></div></div></div>
+          </div>
+          <p class="note">ผลนี้เป็นการคัดกรองเบื้องต้น ก่อนใช้สารเคมีควรยืนยันกับเจ้าหน้าที่เกษตรหรือผู้เชี่ยวชาญโรคพืช และอ่านฉลากทุกครั้ง โมเดลรู้จักเพียง 4 กลุ่ม (ใบจุดสาหร่าย ใบติด ใบจุด และใบปกติ) อาการอื่น เช่น ขาดธาตุอาหารหรือแมลงทำลาย อาจถูกทายผิด</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" type="button" id="btn-again">ตรวจใบใหม่</button>
+          <button class="btn btn-secondary" type="button" id="btn-history">ดูประวัติ</button>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- แท็บ: ประวัติ -->
+  <section class="panel" id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+    <div class="samples-head"><h2 style="font-size:1.15rem">ประวัติการตรวจ</h2><span id="hist-count"></span></div>
+    <div class="hist-list" id="hist-list"></div>
+    <div class="confirm" id="hist-clear-row" hidden>
+      <button class="btn btn-secondary" type="button" id="btn-clear" style="min-height:44px">ล้างประวัติ</button>
+      <span id="clear-confirm" hidden>ลบประวัติทั้งหมดในเครื่องนี้?
+        <button class="btn btn-secondary" type="button" id="btn-clear-yes" style="min-height:40px;display:inline-flex;color:var(--bad)">ลบ</button>
+        <button class="btn btn-secondary" type="button" id="btn-clear-no" style="min-height:40px;display:inline-flex">ยกเลิก</button></span>
+    </div>
+    <p class="note">ประวัติเก็บไว้ในเบราว์เซอร์ของเครื่องนี้เท่านั้น</p>
+  </section>
+
+  <!-- แท็บ: เกี่ยวกับ -->
+  <section class="panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" hidden>
+    <div class="about">
+      <h2>หมอใบทุเรียนทำงานอย่างไร</h2>
+      <ol><li>ย่อรูปใบเป็น 224×224 จุดภาพ</li><li>โมเดล MobileNetV3-Small ประมวลผลในเครื่อง (ไม่ส่งรูปขึ้นอินเทอร์เน็ต)</li><li>แสดงโรคที่น่าจะเป็น ความมั่นใจ และแผนที่ Grad-CAM บอกว่าโมเดลดูที่ส่วนไหนของรูป</li></ol>
+      <h3>ผลการทดสอบโมเดล</h3>
+      <div class="stat">
+        <div><b>94.1%</b><span>ความแม่นยำชุดทดสอบ (ถูก 32 จาก 34 รูป)</span></div>
+        <div><b>97.0 ± 3.0%</b><span>ตรวจไขว้ 5 รอบ แบ่งตามใบต้นฉบับ</span></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>กลุ่ม</th><th>Precision</th><th>Recall</th><th>รูป</th></tr></thead>
+        <tbody><tr><td>โรคใบจุดสาหร่าย</td><td>100.0</td><td>100.0</td><td>7</td></tr>
+        <tr><td>ใบปกติ</td><td>80.0</td><td>100.0</td><td>8</td></tr>
+        <tr><td>โรคใบติด</td><td>100.0</td><td>90.0</td><td>10</td></tr>
+        <tr><td>โรคใบจุดสนิม/ใบจุดทั่วไป</td><td>100.0</td><td>88.9</td><td>9</td></tr></tbody></table></div>
+      <h3>ข้อควรรู้</h3>
+      <ul>
+        <li>ฝึกจากรูปใบทุเรียนจริง 225 ใบ (541 รูปรวมสำเนาที่แต่งภาพ) ชุดทดสอบยังเล็ก ตัวเลขจึงคลาดเคลื่อนได้</li>
+        <li>ความผิดพลาดที่พบคือ ใบที่แผลเล็กหรือจางถูกทายเป็นใบปกติด้วยความมั่นใจต่ำ (ต่ำกว่า 60%) ระบบจึงแจ้งให้ถ่ายใหม่เมื่อไม่แน่ใจ</li>
+        <li>ยังไม่ได้ทดสอบกับรูปจากสวนอื่นหรือกล้องอื่น ควรเก็บรูปเพิ่มเพื่อพัฒนาต่อ</li>
+        <li>ข้อมูลเชื้อสาเหตุและแนวทางจัดการมาจากไฟล์ตั้งค่าโครงการ (configs/model_config.json)</li>
+      </ul>
+      <p class="credit">ผู้จัดทำ: ชีวะ ทัศนา · สาขาวิชาดิจิทัลการเกษตรและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี<br>โครงการ Agri-Microbiology SmartFarm · โมเดลรุ่น 2026-10-16</p>
+    </div>
+  </section>
+
+</div>
+</main>
+
+
+<div class="live" id="live" hidden role="dialog" aria-modal="true" aria-labelledby="live-title">
+  <div class="live-in">
+    <div class="live-top">
+      <button class="icon-btn" id="live-close" type="button" aria-label="ปิดโหมดกล้องสด"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <h2 id="live-title"><i aria-hidden="true"></i>ตรวจแบบสด</h2>
+      <button class="icon-btn" id="live-cam" type="button" aria-pressed="true" aria-label="แสดงแผนที่จุดที่ใช้ตัดสิน"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" opacity=".6"/><circle cx="12" cy="12" r="10.5" opacity=".3"/></svg></button>
+      <button class="icon-btn" id="live-flip" type="button" aria-label="สลับกล้องหน้า/หลัง"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><path d="M9.5 13a2.5 2.5 0 0 1 4.3-1.7M14.5 13a2.5 2.5 0 0 1-4.3 1.7"/></svg></button>
+    </div>
+    <div class="viewport">
+      <video id="live-video" playsinline muted autoplay></video>
+      <canvas id="live-heat" width="224" height="224"></canvas>
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="live-msg" id="live-msg">กำลังเปิดกล้อง…</div>
+    </div>
+    <div class="live-panel" aria-live="polite">
+      <div class="live-row"><b id="live-name">เล็งใบทุเรียนให้อยู่ในกรอบ</b><span id="live-conf">–</span></div>
+      <div class="live-bar"><i id="live-fill" style="width:0"></i></div>
+      <div class="live-sub"><span class="state wait" id="live-state">กำลังดู</span><span id="live-hint">ถือมือถือนิ่ง ๆ ให้ใบเต็มกรอบ</span><span id="live-fps"></span></div>
+    </div>
+    <div class="live-actions">
+      <button class="btn-shot" id="live-shot" type="button" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>บันทึกผลภาพนี้</button>
+    </div>
+  </div>
+</div>
+
+<nav class="tabbar" role="tablist" aria-label="เมนูหลัก">
+  <div class="tabbar-in">
+    <button class="tab" role="tab" id="tab-scan" aria-controls="panel-scan" aria-selected="true" type="button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>ตรวจใบ</button>
+    <button class="tab" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" type="button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>ประวัติ</button>
+    <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false" type="button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>เกี่ยวกับ</button>
+  </div>
+</nav>
+
+<script type="module">
+/*ORT_BUNDLE*/
+</script>
+<script type="module">
+// ---------------- ข้อมูลโรค (จาก configs/model_config.json ของโครงการ) ----------------
+const CLASSES = ["Algal Leaf Spot","Healthy","Leaf Blight","Leaf Spot"];   // ลำดับเดียวกับผลลัพธ์ของโมเดล
+const INFO = {
+  "Algal Leaf Spot":{th:"โรคใบจุดสาหร่าย",pathogen:"Cephaleuros virescens Kunze",
+    guide:"ตัดแต่งกิ่งให้โปร่งเพื่อระบายอากาศ พ่นด้วยสารประกอบทองแดง (Copper oxychloride 85% WP อัตรา 30-50 กรัม/น้ำ 20 ลิตร) ในช่วงที่มีการระบาด",
+    env:{rh:"> 75%",temp:"26–30 °C",season:"ฤดูฝนต่อเนื่อง / ต้นขาดความสมบูรณ์"}},
+  "Healthy":{th:"ใบปกติ สมบูรณ์แข็งแรง",pathogen:"",
+    guide:"บำรุงรักษาธาตุอาหารสม่ำเสมอ ตรวจเช็กระบบน้ำ และหมั่นตรวจแปลงเป็นประจำ",env:null},
+  "Leaf Blight":{th:"โรคใบติด (ราใบติด)",pathogen:"Rhizoctonia solani Kühn",
+    guide:"ตัดส่วนที่เป็นโรคเผาทำลาย พ่นด้วยสารกำจัดเชื้อรากลุ่มไตรอะโซล เช่น เฮกซะโคนาโซล (Hexaconazole 5% SC) หรือไดฟีโนโคนาโซล (Difenoconazole 25% EC)",
+    env:{rh:"> 85%",temp:"28–32 °C",season:"ฤดูฝน / ทรงพุ่มทึบอับลม"}},
+  "Leaf Spot":{th:"โรคใบจุดสนิม/ใบจุดทั่วไป",pathogen:"Colletotrichum gloeosporioides (Penz.) Penz. & Sacc.",
+    guide:"ควบคุมความชื้นในทรงพุ่ม กำจัดวัชพืชใต้โคนต้น และฉีดพ่นสารป้องกันกำจัดเชื้อราประเภทโพรคลอราซ (Prochloraz) หรืออะซอกซีสโตรบิน (Azoxystrobin)",env:null},
+};
+const MODEL_URL = "app_model.onnx";   /*MODEL_URL*/
+function b64ToBytes(b){ const bin=atob(b.trim()); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return u.buffer; }
+const SAMPLES = ["sample1.jpg","sample2.jpg","sample3.jpg","sample4.jpg"];
+const MEAN=[0.485,0.456,0.406], STD=[0.229,0.224,0.225], SIZE=224;
+const $ = (id)=>document.getElementById(id);
+
+// ---------------- สถานะ ----------------
+let session=null, current=null, camAlpha=0.45;
+function setStatus(text, cls){ const c=$("status"); c.className="chip"+(cls?" "+cls:""); c.querySelector("span").textContent=text; }
+function showError(msg){ const e=$("error"); e.textContent=msg; e.hidden=false; }
+
+// ---------------- แท็บ ----------------
+const tabs=["scan","history","about"];
+function selectTab(name){
+  for(const t of tabs){ $("tab-"+t).setAttribute("aria-selected", String(t===name)); $("panel-"+t).hidden = t!==name; }
+  if(name==="history") renderHistory();
+  try{ localStorage.setItem("mbt-tab", name); }catch(e){}
+  window.scrollTo({top:0});
+}
+for(const t of tabs) $("tab-"+t).addEventListener("click",()=>selectTab(t));
+const initialTab = (location.hash||"").replace("#","");
+if(tabs.includes(initialTab)) selectTab(initialTab);
+
+// ---------------- โหลดโมเดล (มีแถบความคืบหน้า) ----------------
+async function fetchWithProgress(url, onProgress){
+  const res = await fetch(url);
+  if(!res.ok) throw new Error(`โหลด ${url} ไม่สำเร็จ (${res.status})`);
+  const total = Number(res.headers.get("content-length"))||0;
+  if(!res.body || !total){ const b=await res.arrayBuffer(); onProgress(b.byteLength,b.byteLength); return b; }
+  const reader=res.body.getReader(); const chunks=[]; let got=0;
+  for(;;){ const {done,value}=await reader.read(); if(done) break; chunks.push(value); got+=value.length; onProgress(got,total); }
+  const out=new Uint8Array(got); let o=0; for(const c of chunks){ out.set(c,o); o+=c.length; } return out.buffer;
+}
+async function loadModel(){
+  const sizes={wasm:11246032, model:MODEL_URL.endsWith('.txt')?8137416:6103062}; const got={wasm:0, model:0};
+  const upd=()=>{ const p=(got.wasm+got.model)/(sizes.wasm+sizes.model); $("loading-bar").style.width=Math.min(100,p*100).toFixed(0)+"%"; };
+  try{
+    const [wasm, model] = await Promise.all([
+      fetchWithProgress("ort-wasm-simd-threaded.wasm",(g)=>{got.wasm=g;upd();}),
+      fetchWithProgress(MODEL_URL,(g)=>{got.model=g;upd();}),
+    ]).then(([w,m])=>[w, MODEL_URL.endsWith(".txt") ? b64ToBytes(new TextDecoder().decode(m)) : m]);
+    const ort = window.ort;
+    ort.env.wasm.numThreads = 1; ort.env.wasm.proxy = false; ort.env.wasm.wasmBinary = wasm;
+    $("loading-title").textContent="กำลังเริ่มระบบตรวจ";
+    session = await ort.InferenceSession.create(model,{executionProviders:["wasm"],graphOptimizationLevel:"all"});
+    $("loading").hidden=true; setStatus("พร้อมตรวจ","ready");
+    $("btn-camera").disabled=false; $("btn-gallery").disabled=false; $("btn-live").disabled=false;
+    window.__modelReady = true;
+    await analyzeUrl(SAMPLES[0], {sample:true, save:false});
+  }catch(err){
+    console.error(err); setStatus("โหลดไม่สำเร็จ","err"); $("loading").hidden=true;
+    showError("เตรียมโมเดลไม่สำเร็จ: "+(err&&err.message?err.message:err)+" — ตรวจสอบอินเทอร์เน็ตแล้วเปิดหน้านี้ใหม่");
+  }
+}
+
+// ---------------- เตรียมรูป ----------------
+async function toBitmap(src){
+  if(src instanceof HTMLCanvasElement) return src;
+  if(src instanceof Blob){
+    try{ return await createImageBitmap(src,{imageOrientation:"from-image"}); }catch(e){}
+    const url=URL.createObjectURL(src); try{ return await loadImg(url); } finally{ setTimeout(()=>URL.revokeObjectURL(url),2000); }
+  }
+  return loadImg(src);
+}
+function loadImg(url){ return new Promise((ok,bad)=>{ const im=new Image(); im.onload=()=>ok(im); im.onerror=()=>bad(new Error("เปิดรูปนี้ไม่ได้ กรุณาเลือกไฟล์รูป .jpg หรือ .png")); im.src=url; }); }
+// ย่อทีละครึ่งเพื่อคุณภาพใกล้เคียงการย่อแบบ antialias ตอนฝึกโมเดล
+function resizeTo(img, size){
+  let w=img.width, h=img.height, cur=img;
+  while(w/2>size && h/2>size){ w=Math.round(w/2); h=Math.round(h/2); const c=new OffscreenCanvasLike(w,h); const x=c.getContext("2d"); x.imageSmoothingQuality="high"; x.drawImage(cur,0,0,w,h); cur=c; }
+  const out=new OffscreenCanvasLike(size,size); const x=out.getContext("2d"); x.imageSmoothingEnabled=true; x.imageSmoothingQuality="high"; x.drawImage(cur,0,0,size,size); return out;
+}
+function OffscreenCanvasLike(w,h){ const c=document.createElement("canvas"); c.width=w; c.height=h; return c; }
+function toTensor(canvas){
+  const d=canvas.getContext("2d").getImageData(0,0,SIZE,SIZE).data; const n=SIZE*SIZE; const f=new Float32Array(3*n);
+  for(let i=0;i<n;i++){ for(let c=0;c<3;c++) f[c*n+i]=(d[i*4+c]/255-MEAN[c])/STD[c]; }
+  return new window.ort.Tensor("float32",f,[1,3,SIZE,SIZE]);
+}
+
+// ---------------- วิเคราะห์ ----------------
+async function analyze(src, opts={}){
+  if(!session){ showError("โมเดลยังไม่พร้อม กรุณารอสักครู่"); return; }
+  $("error").hidden=true;
+  try{
+    const img=await toBitmap(src);
+    const small=resizeTo(img,SIZE);
+    const t0=performance.now();
+    const out=await session.run({image:toTensor(small)});
+    const ms=performance.now()-t0;
+    const probs=Array.from(out.probabilities.data); const cam=Array.from(out.cam.data);
+    const view=resizeTo(img,448);
+    current={probs,cam,view,ms,sample:!!opts.sample,time:Date.now()};
+    renderResult(current);
+    if(opts.save!==false) saveHistory(current);
+    window.__lastResult={probs,ms};
+  }catch(err){ console.error(err); showError(err&&err.message?err.message:"วิเคราะห์รูปไม่สำเร็จ"); }
+}
+async function analyzeUrl(url,opts){ return analyze(url,opts); }
+
+function level(conf,gap){
+  if(conf>=85 && gap>=30) return {cls:"v-good",title:"ความมั่นใจสูง",text:"ผลนี้ค่อนข้างน่าเชื่อถือ ใช้ประกอบการตัดสินใจได้"};
+  if(conf>=60) return {cls:"v-warn",title:"ความมั่นใจปานกลาง",text:"ควรถ่ายรูปใหม่อีกมุม หรือให้ผู้เชี่ยวชาญช่วยยืนยัน"};
+  return {cls:"v-bad",title:"ยังไม่แน่ใจ",text:"ผลนี้ยังเชื่อถือไม่ได้ ลองถ่ายใกล้ขึ้นให้เห็นแผลชัด หรือรูปนี้อาจไม่ใช่ใบทุเรียน/ไม่ใช่โรคที่ระบบรู้จัก"};
+}
+function jet(v){ // แผนที่สี jet (0..1) → [r,g,b]
+  const r=Math.min(1,Math.max(0,1.5-Math.abs(4*v-3))), g=Math.min(1,Math.max(0,1.5-Math.abs(4*v-2))), b=Math.min(1,Math.max(0,1.5-Math.abs(4*v-1)));
+  return [r*255,g*255,b*255];
+}
+function drawPhoto(){
+  if(!current) return; const cv=$("r-canvas"); const x=cv.getContext("2d");
+  x.globalAlpha=1; x.drawImage(current.view,0,0,cv.width,cv.height);
+  if(camAlpha>0){
+    const k=7, heat=document.createElement("canvas"); heat.width=k; heat.height=k; const hx=heat.getContext("2d"); const id=hx.createImageData(k,k);
+    for(let i=0;i<k*k;i++){ const [r,g,b]=jet(current.cam[i]); id.data[i*4]=r; id.data[i*4+1]=g; id.data[i*4+2]=b; id.data[i*4+3]=255; }
+    hx.putImageData(id,0,0);
+    x.globalAlpha=camAlpha; x.imageSmoothingEnabled=true; x.imageSmoothingQuality="high";
+    // ขยายแบบ bilinear โดยเลื่อนครึ่งช่อง ให้ศูนย์กลางแต่ละช่องตรงกับตำแหน่งจริง
+    const s=cv.width/k; x.drawImage(heat,-s/2,-s/2,cv.width+s,cv.height+s); x.globalAlpha=1;
+  }
+}
+function renderResult(r){
+  const order=r.probs.map((p,i)=>[p,i]).sort((a,b)=>b[0]-a[0]);
+  const top=order[0][1], conf=order[0][0]*100, gap=(order[0][0]-order[1][0])*100;
+  const name=CLASSES[top], inf=INFO[name], lv=level(conf,gap);
+  $("r-tag").textContent = r.sample ? "ผลตัวอย่าง (รูปจากชุดทดสอบ)" : "ผลตรวจ · "+new Date(r.time).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"});
+  $("r-name").textContent = lv.cls==="v-bad" ? "ยังระบุไม่ได้ชัดเจน (ใกล้เคียง: "+inf.th+")" : inf.th;
+  $("r-en").textContent = name + " · ประมวลผล "+Math.round(r.ms)+" มิลลิวินาที";
+  $("r-pathogen").innerHTML = inf.pathogen ? "เชื้อสาเหตุ: <em></em>" : "ไม่พบอาการของโรคที่ระบบรู้จัก";
+  if(inf.pathogen) $("r-pathogen").querySelector("em").textContent=inf.pathogen;
+  const v=$("r-verdict"); v.className="verdict "+lv.cls; $("r-vtitle").textContent=lv.title; $("r-vtext").textContent=lv.text;
+  $("r-conf").textContent=conf.toFixed(1)+"%"; $("r-fill").style.width=conf.toFixed(1)+"%";
+  $("r-probs").innerHTML="";
+  for(const [p,i] of order){
+    const row=document.createElement("div"); row.className="prob"+(i===top?" top":"");
+    const a=document.createElement("span"); a.textContent=INFO[CLASSES[i]].th;
+    const b=document.createElement("b"); b.textContent=(p*100).toFixed(1)+"%";
+    const bar=document.createElement("div"); bar.className="pbar"; const fill=document.createElement("i"); fill.style.width=(p*100).toFixed(1)+"%"; bar.append(fill);
+    row.append(a,b,bar); $("r-probs").append(row);
+  }
+  $("r-guide").textContent = lv.cls==="v-bad" ? "ยังไม่ควรใช้สารเคมีจากผลนี้ ให้ถ่ายรูปใหม่หรือปรึกษาเจ้าหน้าที่เกษตร" : inf.guide;
+  const showEnv = !!inf.env && lv.cls!=="v-bad"; $("r-env-wrap").hidden=!showEnv;
+  if(showEnv){ $("r-rh").textContent=inf.env.rh; $("r-temp").textContent=inf.env.temp; $("r-season").textContent=inf.env.season; }
+  $("result").hidden=false; drawPhoto();
+  if(!r.sample) $("result").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+// ---------------- ประวัติ (เก็บในเบราว์เซอร์นี้) ----------------
+const HKEY="mbt-history-v1";
+function readHistory(){ try{ return JSON.parse(localStorage.getItem(HKEY)||"[]"); }catch(e){ return []; } }
+function writeHistory(h){ try{ localStorage.setItem(HKEY, JSON.stringify(h)); return true; }catch(e){ return false; } }
+function thumb(canvas){ const c=document.createElement("canvas"); c.width=c.height=96; c.getContext("2d").drawImage(canvas,0,0,96,96); return c.toDataURL("image/jpeg",0.7); }
+function saveHistory(r){
+  const h=readHistory(); h.unshift({t:r.time, probs:r.probs.map(p=>Math.round(p*1000)/1000), cam:r.cam.map(v=>Math.round(v*100)/100), img:thumb(r.view), full:r.view.toDataURL("image/jpeg",0.8), ms:r.ms});
+  while(h.length>30) h.pop();
+  while(h.length && !writeHistory(h)) h.pop();
+}
+function pillFor(conf,gap){ const lv=level(conf,gap); return lv.cls==="v-good"?["var(--good-bg)","var(--good)"]:lv.cls==="v-warn"?["var(--warn-bg)","var(--warn)"]:["var(--bad-bg)","var(--bad)"]; }
+function renderHistory(){
+  const h=readHistory(), list=$("hist-list"); list.innerHTML="";
+  $("hist-count").textContent = h.length? h.length+" รายการ":"";
+  $("hist-clear-row").hidden = h.length===0;
+  if(!h.length){
+    const e=document.createElement("div"); e.className="empty";
+    e.innerHTML="<b>ยังไม่มีประวัติการตรวจ</b><span>ถ่ายหรือเลือกรูปใบทุเรียนในแท็บ \"ตรวจใบ\" ผลจะถูกบันทึกไว้ที่นี่อัตโนมัติ</span>";
+    list.append(e); return;
+  }
+  h.forEach((it)=>{
+    const order=it.probs.map((p,i)=>[p,i]).sort((a,b)=>b[0]-a[0]); const conf=order[0][0]*100, gap=(order[0][0]-order[1][0])*100;
+    const btn=document.createElement("button"); btn.type="button"; btn.className="hitem";
+    const im=document.createElement("img"); im.src=it.img; im.alt="";
+    const mid=document.createElement("div"); const b=document.createElement("b"); b.textContent=INFO[CLASSES[order[0][1]]].th;
+    const s=document.createElement("span"); s.textContent=new Date(it.t).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"}); mid.append(b,s);
+    const pill=document.createElement("span"); pill.className="pill"; const [bg,fg]=pillFor(conf,gap); pill.style.background=bg; pill.style.color=fg; pill.textContent=conf.toFixed(0)+"%";
+    btn.append(im,mid,pill);
+    btn.addEventListener("click",async()=>{ const img=await loadImg(it.full); const view=resizeTo(img,448); current={probs:it.probs,cam:it.cam,view,ms:it.ms||0,sample:false,time:it.t}; selectTab("scan"); renderResult(current); });
+    list.append(btn);
+  });
+}
+$("btn-clear").addEventListener("click",()=>{ $("clear-confirm").hidden=false; });
+$("btn-clear-no").addEventListener("click",()=>{ $("clear-confirm").hidden=true; });
+$("btn-clear-yes").addEventListener("click",()=>{ try{ localStorage.removeItem(HKEY); }catch(e){} $("clear-confirm").hidden=true; renderHistory(); });
+
+// ---------------- ปุ่มต่างๆ ----------------
+$("btn-camera").addEventListener("click",()=>$("file-camera").click());
+$("btn-gallery").addEventListener("click",()=>$("file-gallery").click());
+for(const id of ["file-camera","file-gallery"]) $(id).addEventListener("change",(e)=>{ const f=e.target.files&&e.target.files[0]; if(f){ markSample(-1); analyze(f); } e.target.value=""; });
+$("btn-again").addEventListener("click",()=>{ $("btn-camera").scrollIntoView({behavior:"smooth",block:"center"}); $("btn-camera").focus(); });
+$("btn-history").addEventListener("click",()=>selectTab("history"));
+$("cam-alpha").addEventListener("input",(e)=>{ camAlpha=Number(e.target.value)/100; drawPhoto(); });
+function markSample(k){ document.querySelectorAll(".sample").forEach((b,i)=>b.setAttribute("aria-pressed",String(i===k))); }
+SAMPLES.forEach((s,k)=>{
+  const b=document.createElement("button"); b.type="button"; b.className="sample"; b.setAttribute("aria-pressed",String(k===0));
+  b.setAttribute("aria-label","รูปตัวอย่างที่ "+(k+1)); const im=document.createElement("img"); im.src=s; im.alt=""; b.append(im);
+  b.addEventListener("click",()=>{ markSample(k); analyzeUrl(s,{sample:true,save:false}); });
+  $("samples").append(b);
+});
+// ติดตั้งเป็นแอปได้เมื่อเปิดผ่านเว็บไซต์ HTTPS ของตัวเอง (ไม่มีผลในหน้าพรีวิว)
+try{ if("serviceWorker" in navigator && document.querySelector('link[rel="manifest"]')) navigator.serviceWorker.register("sw.js").catch(()=>{}); }catch(e){}
+
+// ================= โหมดกล้องสด (Live) =================
+// วิเคราะห์ภาพจากกล้องต่อเนื่องประมาณ 3-5 ครั้ง/วินาที ใช้ "กรอบสี่เหลี่ยมกลางภาพ" ซึ่งเป็นส่วนเดียวกับที่เห็นบนจอ
+// ผลบนจอเฉลี่ยแบบถ่วงน้ำหนัก (EMA) เพื่อไม่ให้ตัวเลขกระพริบ และบอกว่าผล "คงที่" เมื่อทายตรงกันติดต่อกัน
+const LIVE={stream:null,running:false,busy:false,facing:"environment",ema:null,cam:null,streak:0,lastTop:-1,showCam:true,last:0,times:[]};
+const liveSmall=document.createElement("canvas"); liveSmall.width=liveSmall.height=SIZE;
+const liveMid=document.createElement("canvas"); liveMid.width=liveMid.height=448;
+function liveCrop(target){
+  const v=$("live-video"), w=v.videoWidth, h=v.videoHeight; if(!w||!h) return false;
+  const side=Math.min(w,h), sx=(w-side)/2, sy=(h-side)/2;
+  const mx=liveMid.getContext("2d"); mx.imageSmoothingQuality="high";
+  if(LIVE.facing==="user"){ mx.save(); mx.translate(448,0); mx.scale(-1,1); }
+  mx.drawImage(v,sx,sy,side,side,0,0,448,448); if(LIVE.facing==="user") mx.restore();
+  if(target){ const tx=target.getContext("2d"); tx.imageSmoothingQuality="high"; tx.drawImage(liveMid,0,0,target.width,target.height); }
+  return true;
+}
+function liveMessage(t){ const m=$("live-msg"); m.textContent=t||""; m.hidden=!t; }
+async function liveStart(){
+  if(!session) return;
+  $("live").hidden=false; document.body.style.overflow="hidden"; liveMessage("กำลังเปิดกล้อง…");
+  LIVE.ema=null; LIVE.cam=null; LIVE.streak=0; LIVE.lastTop=-1; $("live-shot").disabled=true;
+  if(!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    liveMessage("อุปกรณ์หรือหน้านี้ไม่อนุญาตให้เปิดกล้องสด\nใช้แอป Android หรือเปิดผ่านเว็บ https แล้วลองใหม่ ระหว่างนี้ใช้ปุ่ม \"ถ่ายรูป\" ได้"); return;
+  }
+  try{
+    LIVE.stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:LIVE.facing},width:{ideal:1280},height:{ideal:720}}});
+    const v=$("live-video"); v.srcObject=LIVE.stream; v.style.transform = LIVE.facing==="user" ? "scaleX(-1)" : "";
+    await v.play().catch(()=>{});
+    liveMessage(""); LIVE.running=true; $("live-shot").disabled=false; requestAnimationFrame(liveLoop);
+  }catch(err){
+    const n=err&&err.name;
+    liveMessage(n==="NotAllowedError"||n==="SecurityError" ? "ไม่ได้รับอนุญาตให้ใช้กล้อง — เปิดสิทธิ์กล้องในการตั้งค่าแล้วลองใหม่ หรือใช้ปุ่ม \"ถ่ายรูป\""
+      : n==="NotFoundError"||n==="OverconstrainedError" ? "ไม่พบกล้องบนอุปกรณ์นี้" : "เปิดกล้องไม่สำเร็จ ("+(n||err)+")");
+  }
+}
+function liveStop(){
+  LIVE.running=false;
+  if(LIVE.stream){ LIVE.stream.getTracks().forEach(t=>t.stop()); LIVE.stream=null; }
+  const v=$("live-video"); v.srcObject=null;
+}
+function liveClose(){ liveStop(); $("live").hidden=true; document.body.style.overflow=""; }
+async function liveLoop(ts){
+  if(!LIVE.running) return;
+  if(!LIVE.busy && ts-LIVE.last>=200 && liveCrop(liveSmall)){
+    LIVE.busy=true; LIVE.last=ts;
+    try{
+      const t0=performance.now();
+      const out=await session.run({image:toTensor(liveSmall)});
+      LIVE.times.push(performance.now()-t0); if(LIVE.times.length>10) LIVE.times.shift();
+      const p=Array.from(out.probabilities.data);
+      LIVE.ema = LIVE.ema ? LIVE.ema.map((e,i)=>0.6*e+0.4*p[i]) : p;
+      LIVE.cam = Array.from(out.cam.data);
+      const top=p.indexOf(Math.max(...p)); LIVE.streak = top===LIVE.lastTop ? LIVE.streak+1 : 1; LIVE.lastTop=top;
+      liveRender(liveBrightness());
+    }catch(e){ console.error(e); }
+    LIVE.busy=false;
+  }
+  requestAnimationFrame(liveLoop);
+}
+function liveBrightness(){
+  const d=liveSmall.getContext("2d").getImageData(0,0,SIZE,SIZE).data; let s=0;
+  for(let i=0;i<d.length;i+=16) s+=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+  return s/(d.length/16);
+}
+function liveRender(bright){
+  const e=LIVE.ema, order=e.map((p,i)=>[p,i]).sort((a,b)=>b[0]-a[0]);
+  const conf=order[0][0]*100, gap=(order[0][0]-order[1][0])*100, inf=INFO[CLASSES[order[0][1]]];
+  const lv=level(conf,gap), stable=LIVE.streak>=5;
+  $("live-name").textContent = lv.cls==="v-bad" ? "ยังไม่แน่ใจ" : inf.th;
+  $("live-conf").textContent = conf.toFixed(0)+"%"; $("live-fill").style.width=conf.toFixed(0)+"%";
+  const st=$("live-state");
+  if(lv.cls==="v-good" && stable){ st.className="state ok"; st.textContent="ผลคงที่"; }
+  else if(lv.cls==="v-bad"){ st.className="state bad"; st.textContent="ไม่แน่ใจ"; }
+  else { st.className="state wait"; st.textContent="กำลังดู"; }
+  $("live-hint").textContent = bright<45 ? "แสงน้อยเกินไป หันเข้าหาแสง" : bright>225 ? "สว่างเกินไป หลบแสงแดดจ้า"
+    : lv.cls==="v-bad" ? "ขยับเข้าใกล้ ให้ใบเต็มกรอบและเห็นแผลชัด" : stable && lv.cls==="v-good" ? "กด \"บันทึกผลภาพนี้\" ได้เลย" : "ถือมือถือนิ่ง ๆ";
+  const avg=LIVE.times.reduce((a,b)=>a+b,0)/Math.max(1,LIVE.times.length); $("live-fps").textContent=Math.round(avg)+" มิลลิวินาที/ภาพ";
+  const hc=$("live-heat"), hx=hc.getContext("2d"); hx.clearRect(0,0,hc.width,hc.height);
+  if(LIVE.showCam && LIVE.cam && lv.cls!=="v-bad"){
+    const k=7, tmp=document.createElement("canvas"); tmp.width=tmp.height=k; const tx=tmp.getContext("2d"); const id=tx.createImageData(k,k);
+    for(let i=0;i<k*k;i++){ const v=LIVE.cam[i], [r,g,b]=jet(v); id.data[i*4]=r; id.data[i*4+1]=g; id.data[i*4+2]=b; id.data[i*4+3]=Math.round(40+150*v); }
+    tx.putImageData(id,0,0); hx.imageSmoothingEnabled=true; const s=hc.width/k; hx.drawImage(tmp,-s/2,-s/2,hc.width+s,hc.height+s);
+  }
+}
+async function liveShot(){
+  if(!LIVE.running) return;
+  $("live-shot").disabled=true;
+  const snap=document.createElement("canvas"); snap.width=snap.height=448;
+  if(!liveCrop(snap)){ $("live-shot").disabled=false; return; }
+  while(LIVE.busy) await new Promise(r=>setTimeout(r,20));
+  liveClose(); selectTab("scan"); markSample(-1);
+  await analyze(snap);            // วิเคราะห์ภาพนิ่งเต็มขั้นตอน + บันทึกลงประวัติ
+}
+$("btn-live").addEventListener("click",liveStart);
+$("live-close").addEventListener("click",liveClose);
+$("live-shot").addEventListener("click",liveShot);
+$("live-cam").addEventListener("click",(e)=>{ LIVE.showCam=!LIVE.showCam; e.currentTarget.setAttribute("aria-pressed",String(LIVE.showCam)); if(!LIVE.showCam){ const c=$("live-heat"); c.getContext("2d").clearRect(0,0,c.width,c.height);} });
+$("live-flip").addEventListener("click",async()=>{ LIVE.facing = LIVE.facing==="environment" ? "user" : "environment"; liveStop(); await liveStart(); });
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && !$("live").hidden) liveClose(); });
+document.addEventListener("visibilitychange",()=>{ if(document.hidden && LIVE.running) liveClose(); });
+for(const t of tabs) $("tab-"+t).addEventListener("click",()=>{ if(LIVE.running) liveClose(); });
+window.__analyze = analyze;
+window.__live = LIVE;
+loadModel();
+</script>

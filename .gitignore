@@ -18,17 +18,32 @@ env/
 venv/
 ENV/
 
+# Flutter
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
 # OS / IDE
 .DS_Store
+
 Thumbs.db
 .idea/
 .vscode/
-docs/*.aux
-docs/*.log
-docs/*.toc
-docs/*.lof
-docs/*.lot
-docs/*.out
-docs/*.idx
-docs/*.ind
-docs/*.ilg
+# LaTeX intermediate build files
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.idx
+*.ind
+*.ilg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Dataset directory
+dataset/
+

@@ -1,107 +1,62 @@
-\documentclass[11pt,twoside,openright]{book}
+\documentclass[12pt,twoside,openright]{book}
 
 \usepackage{styles/rbruacademic}
 
 \begin{document}
 
 % -------------------------------------------------------------
-% หน้าปก 3D Pixar Semi-realistics & XeLaTeX TikZ Transparent Architecture
+% หน้าปกหนังสือ (Cover Page - Concept 2 Cyber-Orchard Visionary)
 % -------------------------------------------------------------
 \begin{titlepage}
+\newgeometry{margin=0pt}
 \thispagestyle{empty}
-\begingroup
-\setlength{\XeTeXlinebreakskip}{0pt}
-\begin{tikzpicture}[remember picture, overlay]
-    % 1. Full-Bleed 3D Pixar Cover Artwork (6x9 inch)
+\noindent\begin{tikzpicture}[remember picture, overlay]
     \node[anchor=center, inner sep=0pt] at (current page.center) {
-        \includegraphics[width=\paperwidth,height=\paperheight]{figures/cover_art.jpg}
-    };
-
-    % 2. UPPER SKY ZONE: Transparent Architecture with Dual-Layer Micro Drop-Shadow
-    % Shadow Layer (Soft white glow halo for separation against orchard background)
-    \node[anchor=north, align=center, text width=5.4in] at ([xshift=0.4pt, yshift=-0.106in]current page.north) {
-        {\fontsize{7.5}{9.5}\selectfont\bfseries\color{deepIndigo!90}\textbf{SMART AGRICULTURE \& EDGE AI MOBILE SERIES}}\\[2.5pt]
-        {\fontsize{8.5}{11}\selectfont\color{white}\textbf{เอกสารคำสอนและคู่มือปฏิบัติการขั้นสูง \textbullet\ มหาวิทยาลัยราชภัฏรำไพพรรณี}}\\[3.5pt]
-        
-        % Main Title Line 1
-        {\fontsize{20}{25}\selectfont\bfseries\color{white} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[1.5pt]
-        % Main Title Line 2
-        {\fontsize{26}{32}\selectfont\bfseries\color{white} วิเคราะห์โรคในทุเรียน}\\[3.5pt]
-        % Beginner Pill Tag
-        {\fontsize{11}{14}\selectfont\bfseries\color{white} [สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด]}\\[3.5pt]
-        % English Subtitle
-        {\fontsize{8}{10.5}\selectfont\bfseries\color{white} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION FOR DURIAN DISEASE ANALYSIS}\\[1.5pt]
-        {\fontsize{7}{9.5}\selectfont\color{white} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}
-    };
-
-    % Foreground Layer (Crisp typography floating directly on transparent background)
-    \node[anchor=north, align=center, text width=5.4in] at ([yshift=-0.11in]current page.north) {
-        {\fontsize{7.5}{9.5}\selectfont\bfseries\color{cyberCyan}\textbf{SMART AGRICULTURE \& EDGE AI MOBILE SERIES}}\\[2.5pt]
-        {\fontsize{8.5}{11}\selectfont\color{deepIndigo!90}\textbf{เอกสารคำสอนและคู่มือปฏิบัติการขั้นสูง \textbullet\ มหาวิทยาลัยราชภัฏรำไพพรรณี}}\\[3.5pt]
-        
-        % Main Title Line 1
-        {\fontsize{20}{25}\selectfont\bfseries\color{deepIndigo} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[1.5pt]
-        % Main Title Line 2
-        {\fontsize{26}{32}\selectfont\bfseries\color{agriGreen!90!black} วิเคราะห์โรคในทุเรียน}\\[3.5pt]
-        % Beginner Pill Tag
-        {\fontsize{11}{14}\selectfont\bfseries\color{deepIndigo} [สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด]}\\[3.5pt]
-        % English Subtitle
-        {\fontsize{8}{10.5}\selectfont\bfseries\color{deepIndigo!90} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION FOR DURIAN DISEASE ANALYSIS}\\[1.5pt]
-        {\fontsize{7}{9.5}\selectfont\color{deepIndigo!75} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}
-    };
-
-    % 3. BOTTOM ZONE: 100% Transparent Architecture with Dual-Layer Micro Drop-Shadow
-    % Shadow Layer
-    \node[anchor=south, align=center, text width=5.2in] at ([xshift=0.4pt, yshift=0.176in]current page.south) {
-        {\fontsize{14}{18}\selectfont\bfseries\color{black!90} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[2.5pt]
-        {\fontsize{9}{12}\selectfont\bfseries\color{black!90} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
-        {\fontsize{8.5}{11}\selectfont\bfseries\color{black!90} มหาวิทยาลัยราชภัฏรำไพพรรณี \textbullet\ พ.ศ. 2569}
-    };
-    % Foreground Layer
-    \node[anchor=south, align=center, text width=5.2in] at ([yshift=0.18in]current page.south) {
-        {\fontsize{14}{18}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[2.5pt]
-        {\fontsize{9}{12}\selectfont\bfseries\color{white!95} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี}\\[2pt]
-        {\fontsize{8.5}{11}\selectfont\bfseries\color{techAmber} มหาวิทยาลัยราชภัฏรำไพพรรณี \textbullet\ พ.ศ. 2569}
+        \includegraphics[width=\paperwidth,height=\paperheight]{cover_concept2.pdf}
     };
 \end{tikzpicture}
-\endgroup
 \end{titlepage}
+\restoregeometry
 
 \cleardoublepage
 
 % -------------------------------------------------------------
 % หน้าปกในเวกเตอร์ Dark Mode (Vector Inner Title Page)
 % -------------------------------------------------------------
+\begin{titlepage}
+\newgeometry{margin=0pt}
 \thispagestyle{empty}
 \pagecolor{black!94}
 \begingroup
 \setlength{\XeTeXlinebreakskip}{0pt}
 \begin{tikzpicture}[remember picture, overlay]
-    \draw[color=cyberCyan!50, line width=1.5pt] ([yshift=-1.05in]current page.north) circle (0.62in);
-    \draw[color=neonEmerald!40, dashed, thick] ([yshift=-1.05in]current page.north) circle (0.80in);
-    \draw[color=techAmber!30, dotted, thick] ([yshift=-1.05in]current page.north) circle (0.98in);
+    \draw[color=cyberCyan!50, line width=2pt] ([yshift=-1.40in]current page.north) circle (0.85in);
+    \draw[color=neonEmerald!40, dashed, thick] ([yshift=-1.40in]current page.north) circle (1.10in);
+    \draw[color=techAmber!30, dotted, thick] ([yshift=-1.40in]current page.north) circle (1.35in);
     
-    \node[anchor=center, align=center] at ([yshift=0.50in]current page.center) {
-        {\fontsize{8.5}{11}\selectfont\bfseries\color{cyberCyan} SMART AGRICULTURE \& EDGE AI MOBILE SERIES}\\[8pt]
-        {\fontsize{18}{23}\selectfont\bfseries\color{white} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[5pt]
-        {\fontsize{24}{29}\selectfont\bfseries\color{neonEmerald} วิเคราะห์โรคในทุเรียน}\\[8pt]
-        {\fontsize{12}{15}\selectfont\bfseries\color{techAmber} [สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด]}\\[14pt]
-        {\fontsize{9}{12}\selectfont\color{white!85} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION}\\[2pt]
-        {\fontsize{9}{12}\selectfont\color{white!85} FOR DURIAN DISEASE ANALYSIS}\\[4pt]
-        {\fontsize{8}{11}\selectfont\color{cyberCyan!80} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}\\[14pt]
-        {\color{cyberCyan!70}\rule{0.65\textwidth}{1.5pt}}
+    \node[anchor=center, align=center] at ([yshift=0.60in]current page.center) {
+        {\fontsize{11}{14}\selectfont\bfseries\color{cyberCyan} SMART AGRICULTURE \& EDGE AI MOBILE SERIES}\\[10pt]
+        {\fontsize{24}{30}\selectfont\bfseries\color{white} การออกแบบและพัฒนาแอปพลิเคชันสมาร์ทโฟน}\\[6pt]
+        {\fontsize{32}{38}\selectfont\bfseries\color{neonEmerald} วิเคราะห์โรคในทุเรียน}\\[10pt]
+        {\fontsize{15}{19}\selectfont\bfseries\color{techAmber} [สำหรับผู้เริ่มต้นไม่มีพื้นฐานการเขียนโค้ด]}\\[18pt]
+        {\fontsize{11.5}{15}\selectfont\color{white!85} DESIGN AND DEVELOPMENT OF SMARTPHONE APPLICATION}\\[3pt]
+        {\fontsize{11.5}{15}\selectfont\color{white!85} FOR DURIAN DISEASE ANALYSIS}\\[5pt]
+        {\fontsize{10}{13}\selectfont\color{cyberCyan!80} (A NO-CODE \& BEGINNER-FRIENDLY GUIDE TO COMPUTER VISION \& EDGE AI)}\\[18pt]
+        {\color{cyberCyan!70}\rule{0.70\textwidth}{2pt}}
     };
 
-    \node[anchor=center, align=center] at ([yshift=-1.40in]current page.center) {
-        {\fontsize{13}{16}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[4pt]
-        {\fontsize{9.5}{12}\selectfont\color{white!90} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม}\\[2pt]
-        {\fontsize{9}{12}\selectfont\color{white!75} คณะวิทยาศาสตร์และเทคโนโลยี}\\[4pt]
-        {\fontsize{8.5}{11}\selectfont\color{techAmber} มหาวิทยาลัยราชภัฏรำไพพรรณี}
+    \node[anchor=center, align=center] at ([yshift=-1.80in]current page.center) {
+        {\fontsize{18}{23}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[5pt]
+        {\fontsize{12.5}{16}\selectfont\color{white!90} สาขาวิชาปัญญาประดิษฐ์เพื่อเกษตรดิจิทัลและสิ่งแวดล้อม}\\[3pt]
+        {\fontsize{12}{15}\selectfont\color{white!75} คณะวิทยาศาสตร์และเทคโนโลยี}\\[5pt]
+        {\fontsize{11.5}{15}\selectfont\color{techAmber} มหาวิทยาลัยราชภัฏรำไพพรรณี}
     };
 \end{tikzpicture}
 \endgroup
 \newpage
 \pagecolor{white}
+\end{titlepage}
+\restoregeometry
 \cleardoublepage
 
 % -------------------------------------------------------------
@@ -157,12 +112,14 @@
 \include{chapters/ch07_mobile_application}
 
 % -------------------------------------------------------------
-% Appendices: ภาคผนวก ก, ข, ค
+% Appendices: ภาคผนวก ก, ข, ค, ง
 % -------------------------------------------------------------
 \appendix
 \include{appendices/app_a_environment}
 \include{appendices/app_b_hyperparameters}
 \include{appendices/app_c_glossary}
+\include{appendices/app_d_prompts}
+
 
 % -------------------------------------------------------------
 % Bibliography: บรรณานุกรมมาตรฐาน APA 7

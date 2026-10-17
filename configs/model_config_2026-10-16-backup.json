@@ -1,0 +1,67 @@
+{
+    "model_architecture": "mobilenet_v3_small",
+    "advanced_architectures_supported": [
+        "mobilenet_v3_small",
+        "efficientnet_b0",
+        "yolov8n_cls"
+    ],
+    "image_size": [224, 224],
+    "batch_size": 16,
+    "num_classes": 4,
+    "classes": [
+        "Algal Leaf Spot",
+        "Leaf Blight",
+        "Leaf Spot",
+        "Healthy"
+    ],
+    "th_translations": {
+        "Algal Leaf Spot": "โรคใบจุดสาหร่าย",
+        "Leaf Blight": "โรคใบติด (ราใบติด)",
+        "Leaf Spot": "โรคใบจุดสนิม/ใบจุดทั่วไป",
+        "Healthy": "ใบปกติ สมบูรณ์แข็งแรง"
+    },
+    "pathogen_scientific_names": {
+        "Algal Leaf Spot": "Cephaleuros virescens Kunze",
+        "Leaf Blight": "Rhizoctonia solani Kühn",
+        "Leaf Spot": "Colletotrichum gloeosporioides (Penz.) Penz. & Sacc.",
+        "Healthy": "ไม่มีเชื้อสาเหตุ (Non-pathogenic)"
+    },
+    "disease_severity_levels": {
+        "Level_1": "ระดับเริ่มต้น (< 10% ของพื้นที่ใบ)",
+        "Level_2": "ระดับปานกลาง (10% - 30% ของพื้นที่ใบ)",
+        "Level_3": "ระดับรุนแรง (> 30% ของพื้นที่ใบ มีอาการใบร่วง)"
+    },
+    "treatment_guidelines": {
+        "Algal Leaf Spot": "ตัดแต่งกิ่งให้โปร่งเพื่อระบายอากาศ พ่นด้วยสารประกอบทองแดง (Copper oxychloride 85% WP อัตรา 30-50 กรัม/น้ำ 20 ลิตร) ในช่วงที่มีการระบาด",
+        "Leaf Blight": "ตัดส่วนที่เป็นโรคเผาทำลาย พ่นด้วยสารกำจัดเชื้อรากลุ่มไตรอะโซล เช่น เฮกซะโคนาโซล (Hexaconazole 5% SC) หรือไดฟีโนโคนาโซล (Difenoconazole 25% EC)",
+        "Leaf Spot": "ควบคุมความชื้นในทรงพุ่ม กำจัดวัชพืชใต้โคนต้น และฉีดพ่นสารป้องกันกำจัดเชื้อราประเภทโพรคลอราซ (Prochloraz) หรืออะซอกซีสโตรบิน (Azoxystrobin)",
+        "Healthy": "บำรุงรักษาธาตุอาหารสม่ำเสมอ ตรวจเช็กระบบน้ำ และหมั่นตรวจแปลงเป็นประจำ"
+    },
+    "environmental_correlation": {
+        "Leaf Blight": {
+            "trigger_rh": "> 85%",
+            "trigger_temp": "28 - 32 C",
+            "risk_season": "ฤดูฝน / ทรงพุ่มทึบอับลม"
+        },
+        "Algal Leaf Spot": {
+            "trigger_rh": "> 75%",
+            "trigger_temp": "26 - 30 C",
+            "risk_season": "ฤดูฝนต่อเนื่อง / ต้นขาดความสมบูรณ์"
+        }
+    },
+    "explainable_ai": {
+        "method": "Grad-CAM (Gradient-weighted Class Activation Mapping)",
+        "target_layer": "features[-1]",
+        "colormap": "jet"
+    },
+    "edge_deployment": {
+        "export_formats": ["PyTorch (.pth)", "ONNX (.onnx)", "TorchScript (.pt)"],
+        "target_edge_hardware": ["Raspberry Pi 4/5", "Jetson Nano", "Flutter Smartphone App (Edge AI)"]
+    },
+    "normalize_mean": [0.485, 0.456, 0.406],
+    "normalize_std": [0.229, 0.224, 0.225],
+    "version": "2.0.0",
+    "target_crop": "Durian (ทุเรียน - Durio zibethinus L.)",
+    "institution": "มหาวิทยาลัยราชภัฏรำไพพรรณี (RBRU)",
+    "lab": "Agri-Microbiology SmartFarm & Digital Physics AI Research Unit"
+}

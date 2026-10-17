@@ -1,0 +1,114 @@
+\chapter{พรอมต์ปัญญาประดิษฐ์เชิงสร้างสรรค์สำหรับสื่อและกิจกรรม}
+\label{app:generative_ai_prompts}
+\index{พรอมต์ปัญญาประดิษฐ์}
+\index{Google Flow}
+\index{Generative AI}
+\index{การสร้างสื่อวิดีโอ}
+
+ภาคผนวกนี้รวบรวมชุดคำสั่งหรือพรอมต์ (Prompts) สำหรับสร้างสรรค์สื่อดิจิทัลและสื่อวิดีโอสั้นด้วยแบบจำลองปัญญาประดิษฐ์เชิงสร้างสรรค์ (Generative Video AI เช่น Google Vids, Google Veo, VideoFX หรือ Runway) ความยาวตอนละ 10 วินาที จำนวน 3 ตอนต่อเนื่อง พร้อมบทบรรยายภาษาไทยสำเนียงจันทบุรีแท้ เพื่อใช้ในการเผยแพร่ผลงานวิจัยและการประชาสัมพันธ์กิจกรรมอบรมเชิงปฏิบัติการ
+
+\section{แนวคิดและหลักการออกแบบสื่อวิดีโอต่อเนื่อง (Continuity Workflow)}
+การสร้างสรรค์วิดีโอสั้นความยาวตอนละ 10 วินาทีให้มีความต่อเนื่องกลมกลืน (Visual and Narrative Continuity) มีหัวใจสำคัญ 3 ประการ:
+\begin{enumerate}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{การควบคุมทิศทางภาพและกล้อง (Camera Choreography):} กำหนดชนิดของเลนส์ การเคลื่อนกล้อง (Pan, Tilt, Crane, Push-in) และอุณหภูมิแสงให้สอดคล้องกันตลอดทั้ง 3 ตอน
+    \item \textbf{การจับคู่อัตลักษณ์ภาพ (Match Cut / Seed Locking):} ล็อกสไตล์ตัวละคร สภาพแวดล้อม และชุดสี เพื่อให้รอยต่อระหว่างตอนที่ 1, 2 และ 3 ลื่นไหลเสมือนเป็นช็อตถ่ายทำในกองเดียวกัน
+    \item \textbf{บทพากย์และเสียงวรรณยุกต์อัตลักษณ์ท้องถิ่น:} การใช้ภาษาไทยถิ่นจันทบุรีและระยอง--จันท์--ตราด พร้อมคำลงท้ายเอกลักษณ์ เช่น \textit{"ฮิ", "ด็อก", "ก๊ะ", "เนี่ยะ"} ซึ่งสร้างความเข้าถึงง่ายและเป็นมิตรกับชุมชนเกษตรกร
+\end{enumerate}
+
+\section{ชุดพรอมต์ที่ 1: สื่อเผยแพร่นวัตกรรมสวนทุเรียนอัจฉริยะ AI เมืองจันท์}
+ชุดวิดีโอความยาวรวม 30 วินาที (10 วินาที $\times$ 3 ตอน) นำเสนอเรื่องราวการนำเทคโนโลยีปัญญาประดิษฐ์เข้ามาสนับสนุนการตรวจวิเคราะห์แปลงทุเรียนภูเขาเมืองจันทบุรี
+
+\begin{nocodebox}{ตอนที่ 1: ตื่นตาแสงเช้า... ก้าวสู่สวนทุเรียนยุคใหม่ (0--10 วินาที)}
+\textbf{วัตถุประสงค์ภาพ:} เปิดตัวบรรยากาศสวนทุเรียนเมืองจันท์ยามเช้า และภาพเกษตรกรหนุ่มสาวยกสมาร์ทโฟนเตรียมสแกนแปลง\\
+\textbf{การเคลื่อนกล้อง:} Drone Crane Down \& Smooth Push Forward\\
+\textbf{Prompt ภาษาอังกฤษ (Video Generation):}
+\begin{lstlisting}[language=bash]
+Cinematic ultra-realistic 4K, slow drone establishing shot descending over a lush green durian orchard on the hills of Chanthaburi in early golden morning mist. Sunlight streaming through tree canopies. A cheerful Thai local farmer holding a smartphone scans fresh durian leaves, gentle breeze moving the leaves, highly detailed foliage, natural photorealistic lighting, 24fps.
+\end{lstlisting}
+\textbf{บทพากย์เสียงภาษาไทย สำเนียงจันทบุรี:}
+\begin{quote}
+\textit{*(น้ำเสียงกระฉับกระเฉง เป็นกันเอง หางเสียงสูงแบบชาวจันท์)*}\\
+``อรุณสวัสดิ์ยามเช้าที่เมืองจันท์ฮิ! ดูหมอกคลุมยอดเขาสิ สวยอย่าบอกใครเชียว... สมัยนี้ชาวสวนจันท์เราไม่ได้ดูตาเปล่าแล้วนะเนี่ยะ เปิดมือถือสแกนสวนแต่เช้ากันเลยฮิ!''
+\end{quote}
+\end{nocodebox}
+
+\begin{nocodebox}{ตอนที่ 2: สแกนตรวจโรคแม่นยำ ด้วยปัญญาประดิษฐ์ AI (10--20 วินาที)}
+\textbf{วัตถุประสงค์ภาพ:} โฟกัสหน้าจอสมาร์ทโฟนที่เล็งไปยังใบทุเรียน ระบบประมวลผลขึ้นกรอบตรวจจับและระดับความเชื่อมั่นแบบ Real-time\\
+\textbf{การเคลื่อนกล้อง:} Smooth Tracking \& Macro Pan\\
+\textbf{Prompt ภาษาอังกฤษ (Video Generation):}
+\begin{lstlisting}[language=bash]
+Continuous match cut from previous scene, macro close-up over-the-shoulder shot of the smartphone screen pointed at a durian branch with mature fruit. Futuristic yet subtle translucent AR bounding boxes and green holographic indicators scanning the leaves and durian texture smoothly, high-tech smart farming interface, organic bokeh background, hyper-detailed, 8k resolution, cinematic color grading.
+\end{lstlisting}
+\textbf{บทพากย์เสียงภาษาไทย สำเนียงจันทบุรี:}
+\begin{quote}
+\textit{*(จังหวะตื่นเต้น มั่นใจ ชี้ชวนให้เห็นความแม่นยำของ AI)*}\\
+``แหม... ดูสิเนี่ยะ! ส่องปุ๊บ กล้อง AI มันรู้ใจปั๊บ โรคราใบติดหรือหนอนเจาะมันตรวจเจอหมดก๊ะ ไม่ต้องมานั่งเดาให้เสียเวลา ทันใจดีแท้ด็อก!''
+\end{quote}
+\end{nocodebox}
+
+\begin{nocodebox}{ตอนที่ 3: รวงทองเมืองจันท์ ทุเรียนเกรดพรีเมียมสู่ครัวโลก (20--30 วินาที)}
+\textbf{วัตถุประสงค์ภาพ:} ผลผลิตทุเรียนหมอนทองผลสวยสมบูรณ์ การเคาะตรวจสอบคุณภาพ และรอยยิ้มภาคภูมิใจของเกษตรกร\\
+\textbf{การเคลื่อนกล้อง:} Medium Shot Arc to Dutch Pan\\
+\textbf{Prompt ภาษาอังกฤษ (Video Generation):}
+\begin{lstlisting}[language=bash]
+Seamless transition, golden hour light. The farmer gently taps a huge, perfect golden-yellow Monthong durian hanging from a healthy branch with a bamboo stick, crisp sound, showing pride with a bright genuine smile. Cut to export crates filled with premium durians with GI Chanthaburi certification tags, warm and inspiring atmosphere, cinematic depth of field, 4K.
+\end{lstlisting}
+\textbf{บทพากย์เสียงภาษาไทย สำเนียงจันทบุรี:}
+\begin{quote}
+\textit{*(น้ำเสียงอบอุ่น ภูมิใจ เชิญชวนลิ้มลองผลผลิตคุณภาพ)*}\\
+``นี่แหละฮิ... ทุเรียนพรีเมียมเมืองจันท์ เนื้อเนียน เม็ดลีบ หวานหอมกลมกล่อม ทำด้วยเทคโนโลยีผสมหัวใจชาวสวน ใครได้ชิมเป็นต้องติดใจ... มาเที่ยวเมืองจันท์กันเน้อ!''
+\end{quote}
+\end{nocodebox}
+
+\section{ชุดพรอมต์ที่ 2: เชิญชวนร่วมกิจกรรมอบรมเชิงปฏิบัติการพัฒนา AI ทุเรียน}
+ชุดวิดีโอประชาสัมพันธ์เชิญชวนเข้าร่วมกิจกรรม \textbf{``การออกแบบและพัฒนาโมเดลการเรียนรู้เชิงลึก และแอปพลิเคชันสมาร์ทโฟนวิเคราะห์โรคในทุเรียน ด้วยปัญญาประดิษฐ์''} มุ่งเน้นการสร้างแรงบันดาลใจให้แก่ผู้เริ่มต้นและเกษตรกรรุ่นใหม่
+
+\begin{academicbox}{ตอนที่ 1: จากปัญหาโรคทุเรียน สู่การเทรน Deep Learning (0--10 วินาที)}
+\textbf{วัตถุประสงค์ภาพ:} แสดงปัญหาโรคใบติดและไฟทอปธอรา ก่อนตัดสลับเข้าสู่ห้องปฏิบัติการวิจัยคอมพิวเตอร์วิทัศน์ที่กำลังเทรนโมเดล PyTorch\\
+\textbf{การเคลื่อนกล้อง:} Quick Push-in from Diseased Leaf to Monitor Graphs\\
+\textbf{Prompt ภาษาอังกฤษ (Video Generation):}
+\begin{lstlisting}[language=bash]
+Cinematic dynamic split-to-full shot. Beginning with a close-up of a diseased durian leaf showing leaf blight symptoms, smoothly transitioning into a modern high-tech computer lab. University researchers and smart farmers collaborating on screens showing neural network architectures, PyTorch code, loss curves, and 3D deep learning nodes pulsating with vibrant cyan and green lights. Clean cinematic lighting, 4K resolution, 24fps.
+\end{lstlisting}
+\textbf{บทพากย์เสียงภาษาไทย สำเนียงจันทบุรี:}
+\begin{quote}
+\textit{*(น้ำเสียงชวนขบคิด จุดประกายความหวังในการแก้ปัญหา)*}\\
+``โรคราใบติด ไฟทอปธอรากวนใจทุเรียนเมืองจันท์อยู่ใช่ไหมฮิ? อย่าเพิ่งท้อเนี่ยะ! มาสร้างโมเดล Deep Learning ด้วยกันกับเรา เทรนให้คอมพิวเตอร์ฉลาดล้ำ ตรวจจับโรคได้แม่นยำแท้ๆ ด็อก!''
+\end{quote}
+\end{academicbox}
+
+\begin{academicbox}{ตอนที่ 2: แปลงโมเดลลงมือถือ สแกนตรวจได้ทุกที่ (10--20 วินาที)}
+\textbf{วัตถุประสงค์ภาพ:} ขั้นตอนแปลงโมเดลสู่สมาร์ทโฟน (Flutter Mobile App) และทดสอบสแกนใบจริงในแปลงโดยไม่ต้องต่ออินเทอร์เน็ต\\
+\textbf{การเคลื่อนกล้อง:} Over-the-shoulder Handheld Tracking Shot\\
+\textbf{Prompt ภาษาอังกฤษ (Video Generation):}
+\begin{lstlisting}[language=bash]
+Match cut continuity. Close-up hands holding a modern smartphone running a custom mobile app for durian pathology. The camera views a durian tree through the phone screen: real-time AI bounding boxes detect disease classes with high confidence percentages like '98% Healthy' and 'Phytophthora Detected'. Fast-paced coding snippets and Flutter UI designs floating softly in the background. Crisp, sleek, photorealistic, 4K.
+\end{lstlisting}
+\textbf{บทพากย์เสียงภาษาไทย สำเนียงจันทบุรี:}
+\begin{quote}
+\textit{*(จังหวะคล่องแคล่ว ตื่นเต้น กระชับ)*}\\
+``เทรนเสร็จ ก็ยกใส่สมาร์ทโฟนในมือถือเรานี่แหละก๊ะ! ส่องปุ๊บ... ปัญญาประดิษฐ์ตีความปั๊บ รู้ผลทันควันในสวนเลย ไม่ต้องพึ่งอินเทอร์เน็ตแรงๆ ก็สแกนได้สบายปร๋อฮิ!''
+\end{quote}
+\end{academicbox}
+
+\begin{academicbox}{ตอนที่ 3: จับมือร่วมเวิร์กชอป ยกระดับทุเรียนจันท์ (20--30 วินาที)}
+\textbf{วัตถุประสงค์ภาพ:} กลุ่มผู้เข้าร่วมอบรม ทั้งอาจารย์ นักศึกษา และเกษตรกร ยิ้มแย้มและชูสมาร์ทโฟนร่วมกัน พร้อมแบนเนอร์เวิร์กชอป Call-to-Action\\
+\textbf{การเคลื่อนกล้อง:} Crane Pull-back \& Slow Arc Up\\
+\textbf{Prompt ภาษาอังกฤษ (Video Generation):}
+\begin{lstlisting}[language=bash]
+Bright uplifting outdoor-indoor blend shot. A diverse group of young innovators, students, and local farmers smiling together in a lush durian orchard, proudly raising their smartphones displaying the diagnostic app. Soft golden sunlight, inspiring academic workshop banner with text 'AI Durian Smart App Workshop', high energy, warm smiles, commercial grade cinematic color grade, 4K.
+\end{lstlisting}
+\textbf{บทพากย์เสียงภาษาไทย สำเนียงจันทบุรี:}
+\begin{quote}
+\textit{*(น้ำเสียงอบอุ่น ทรงพลัง เชื้อเชิญจริงใจ)*}\\
+``มาเรียนรู้ด้วยกันเน้อ... เวิร์กชอปออกแบบ Deep Learning และแอปมือถือตรวจโรคทุเรียน! ไม่ยากอย่างที่คิด มาร่วมเปลี่ยนสวนเมืองจันท์ให้เป็นสมาร์ทฟาร์มระดับโลกด้วยกันฮิ... รีบสมัครกันเข้ามาเลยเน้อ!''
+\end{quote}
+\end{academicbox}
+
+\section{ข้อแนะนำในการสังเคราะห์เสียงพากย์สำเนียงท้องถิ่น (AI Voiceover Guidelines)}
+เพื่อให้เสียงพากย์ที่ได้จากระบบ Text-to-Speech (TTS) หรือ Voice Cloning มีชีวิตชีวาและสะท้อนสำเนียงเมืองจันท์อย่างถูกต้อง แนะนำปฏิบัติตามแนวทางต่อไปนี้:
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt]
+    \item \textbf{การบันทึกต้นแบบเสียง (Voice Cloning Training):} บันทึกไฟล์เสียงตัวอย่างของเจ้าของสำเนียงท้องถิ่นในบรรยากาศห้องเงียบ ความยาวอย่างน้อย 1--2 นาที โดยให้มีตัวอย่างการออกเสียงหางเสียงคำว่า \textit{``ฮิ'', ``เนี่ยะ'', ``ก๊ะ'', ``ด็อก'', ``เชียว''}
+    \item \textbf{การกำกับอารมณ์และเครื่องหมายวรรคตอน:} การใช้เครื่องหมายอัศเจรีย์ (!) และจุดไข่ปลา (...) ในสคริปต์ ช่วยปรับให้โมเดล AI ยกจังหวะเสียงท้ายประโยคให้สูงขึ้นตามธรรมชาติของสำเนียงระยอง--จันท์--ตราด
+    \item \textbf{การมิกซ์เสียงประกอบ (Sound Design):} เสริมด้วยเสียงบรรยากาศสวนธรรมชาติ (Ambience of Orchard Birds, Gentle Wind) และเสียงเคาะลูกทุเรียนเบาๆ ในตอนที่ 3 เพื่อเพิ่มความสมจริงระดับมืออาชีพ
+\end{itemize}
